@@ -22,13 +22,13 @@ const description = "description" in item ? item.description : undefined;
 
 const triggerClass =
   depth === 0
-    ? "flex items-center gap-1 whitespace-nowrap transition-colors duration-200 hover:text-brand-1 max-tablet:w-full max-tablet:justify-center max-tablet:py-1"
-    : "flex w-full items-center justify-between gap-2 rounded-md px-3 py-2 transition-colors duration-200 hover:bg-brand-3/50 max-tablet:justify-center max-tablet:hover:bg-transparent";
+    ? "flex items-center gap-1.5 whitespace-nowrap transition-colors duration-200 hover:text-brand-1 max-tablet:w-full max-tablet:justify-center max-tablet:py-2.5 max-tablet:min-h-[44px] active:opacity-75"
+    : "flex w-full items-center justify-between gap-2 rounded-md px-3 py-2.5 transition-colors duration-200 hover:bg-brand-3/50 max-tablet:justify-center max-tablet:hover:bg-transparent max-tablet:min-h-[44px]";
 
 const linkClass =
   depth === 0
-    ? `whitespace-nowrap transition-colors duration-200 hover:text-brand-1 ${isActive ? "text-brand-1" : ""}`
-    : "flex items-start gap-2.5 rounded-lg p-2 transition-colors duration-200 hover:bg-brand-3/40 max-tablet:w-full max-tablet:max-w-[22rem] max-tablet:items-center";
+    ? `whitespace-nowrap transition-colors duration-200 hover:text-brand-1 max-tablet:flex max-tablet:items-center max-tablet:justify-center max-tablet:py-2.5 max-tablet:min-h-[44px] max-tablet:w-full active:opacity-75 ${isActive ? "text-brand-1" : ""}`
+    : "flex items-start gap-2.5 rounded-lg p-2.5 transition-colors duration-200 hover:bg-brand-3/40 active:bg-brand-3/60 max-tablet:w-full max-tablet:max-w-[22rem] max-tablet:items-center max-tablet:min-h-[48px]";
 ---
 
 {

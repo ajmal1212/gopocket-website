@@ -23,36 +23,36 @@ const {
 } = Astro.props;
 ---
 
-<sy-faqs class="relative my-32 block overflow-hidden">
+<sy-faqs class="relative my-20 max-phone:my-14 block overflow-hidden">
   <Container class="relative z-[2] flex flex-col items-center">
-    <div class="mb-12 text-center">
+    <div class="mb-10 text-center">
       <TitleTag
-        class="relative z-[2] mb-[0.1em] text-center text-h2 uppercase max-phone:text-[2.5rem] [&>span:last-child]:hidden"
+        class="relative z-[2] mb-[0.1em] text-center text-h2 uppercase max-phone:text-[2rem] max-phone-xs:text-[1.75rem] [&>span:last-child]:hidden"
         data-sy-reveal="words"
       >
         <span>{title}</span>
         <span aria-hidden>{mobileTitle}</span>
       </TitleTag>
-      <p class="text-lg text-text-alt" data-sy-reveal="lines">{subtitle}</p>
+      <p class="text-lg max-phone:text-base text-text-alt" data-sy-reveal="lines">{subtitle}</p>
     </div>
 
     <div class="flex w-full max-w-[36rem] flex-col">
       {
         items.map((item, i) => (
-          <div class="faq relative border-t border-text/20 py-6 last:border-b">
+          <div class="faq relative border-t border-text/20 py-3 last:border-b">
             <div>
               <h3
-                class="font-inter text-lg font-medium tracking-[-0.02em]"
+                class="font-inter text-lg max-phone:text-base font-medium tracking-[-0.02em]"
                 id={`faq-header-${i}`}
               >
                 <button
-                  class="toggle flex w-full cursor-pointer flex-row-reverse items-center justify-end gap-4 border-none bg-none p-0 text-left [letter-spacing:inherit]"
+                  class="toggle flex w-full cursor-pointer flex-row items-center justify-between gap-4 border-none bg-none px-3 py-3 min-h-[48px] rounded-xl text-left transition-colors duration-200 hover:bg-brand-3/30 active:bg-brand-3/60 [letter-spacing:inherit]"
                   type="button"
                   aria-controls={`faq-panel-${i}`}
                   aria-expanded="false"
                 >
                   <span data-sy-reveal="words">{item["question"]}</span>
-                  <span class="relative flex h-3 w-3 items-center justify-center before:absolute before:h-[2px] before:w-full before:[transform:translateZ(0)] before:rounded-[99px] before:bg-brand-1 before:transition-transform before:duration-200 before:ease-in-out-cubic after:absolute after:h-[2px] after:w-full after:[transform:translateZ(0)_rotate(90deg)] after:rounded-[99px] after:bg-brand-1 after:transition-transform after:duration-200 after:ease-in-out-cubic [.faq.is-opened_&]:before:[transform:translateZ(0)_rotate(45deg)] [.faq.is-opened_&]:after:[transform:translateZ(0)_rotate(135deg)]" />
+                  <span class="relative flex h-4 w-4 shrink-0 items-center justify-center before:absolute before:h-[2px] before:w-full before:[transform:translateZ(0)] before:rounded-[99px] before:bg-brand-1 before:transition-transform before:duration-200 before:ease-in-out-cubic after:absolute after:h-[2px] after:w-full after:[transform:translateZ(0)_rotate(90deg)] after:rounded-[99px] after:bg-brand-1 after:transition-transform after:duration-200 after:ease-in-out-cubic [.faq.is-opened_&]:before:[transform:translateZ(0)_rotate(45deg)] [.faq.is-opened_&]:after:[transform:translateZ(0)_rotate(135deg)]" />
                 </button>
               </h3>
             </div>
@@ -62,7 +62,7 @@ const {
               aria-labelledby={`faq-header-${i}`}
               hidden
             >
-              <div class="answer mt-3 pl-[1.75rem] text-sm text-text-alt [white-space:preserve-breaks]">
+              <div class="answer px-3 pt-1 pb-3 text-sm text-text-alt leading-relaxed [white-space:preserve-breaks]">
                 {item["answer"]}
               </div>
             </div>

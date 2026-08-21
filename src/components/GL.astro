@@ -56,8 +56,11 @@
   camera.lookAt(0, 0, 0);
   camera.updateProjectionMatrix();
 
-  const renderer = new WebGLRenderer({ antialias: true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio ?? 1, 2));
+  const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
+  const maxDpr = isMobile ? 1.5 : 2;
+
+  const renderer = new WebGLRenderer({ antialias: !isMobile, powerPreference: "high-performance" });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio ?? 1, maxDpr));
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setClearColor("#fff");
   renderer.setClearAlpha(0);
@@ -689,7 +692,8 @@ void main() {
 
       pixelToUnit = -FRUSTUM_SIZE / this.height;
 
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio ?? 1, 2));
+      const isMob = this.width <= 768;
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio ?? 1, isMob ? 1.5 : 2));
       renderer.setSize(this.width, this.height);
 
       globals.uResolution.value.set(canvas.width, canvas.height);

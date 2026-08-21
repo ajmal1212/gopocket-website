@@ -16,9 +16,13 @@
   window.scrollVelocity = 0;
   window.scrollDirection = 1;
 
+  const isTouch = typeof window !== "undefined" && ("ontouchstart" in window || navigator.maxTouchPoints > 0);
+
   const lenis = new Lenis({
-    syncTouch: true,
+    syncTouch: !isTouch,
+    smoothWheel: true,
     lerp: 0.125,
+    touchMultiplier: 1.5,
   });
   lenis.on("scroll", ScrollTrigger.update);
 

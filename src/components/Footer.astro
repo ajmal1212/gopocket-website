@@ -103,20 +103,20 @@ const importantInfo = [
 ];
 ---
 
-<footer class="bg-[#1f2023] text-white/80">
-  <Container class="py-16">
-    <div class="grid grid-cols-1 gap-10 max-tablet:gap-8 md:grid-cols-[1.2fr_1fr_1fr_1fr_1fr]">
-      <div>
-        <a class="relative z-[3] block w-fit" href={logoUrl}>
+<footer class="bg-[#1f2023] text-white/80 pb-[max(2rem,env(safe-area-inset-bottom))]">
+  <Container class="py-16 max-phone:py-10">
+    <div class="grid grid-cols-1 gap-10 max-tablet:gap-8 max-phone:grid-cols-2 max-phone-xs:grid-cols-1 md:grid-cols-[1.2fr_1fr_1fr_1fr_1fr]">
+      <div class="max-phone:col-span-full">
+        <a class="relative z-[3] block w-fit min-h-[44px] flex items-center active:opacity-75" href={logoUrl}>
           <Logo class="block h-auto w-28" />
           <span class="sr-only">{logoAlt}</span>
         </a>
-        <p class="mt-4 max-w-[20em] text-sm text-white/60">
+        <p class="mt-3 max-w-[20em] text-sm text-white/60">
           Investing and trading is made simple, affordable and accessible for every Indian.
         </p>
         <a
           href="mailto:support@gopocket.in"
-          class={`${linkClass} mt-4 block text-sm`}
+          class={`${linkClass} mt-3 inline-block py-1 text-sm text-brand-3`}
         >
           support@gopocket.in
         </a>
@@ -125,11 +125,11 @@ const importantInfo = [
       {
         columns.map((col) => (
           <div>
-            <h3 class="text-sm font-medium text-white">{col.title}</h3>
-            <ul class="m-0 mt-4 flex list-none flex-col gap-3 p-0 text-sm text-white/60">
+            <h3 class="text-sm font-semibold text-white tracking-wide uppercase">{col.title}</h3>
+            <ul class="m-0 mt-3 flex list-none flex-col gap-2.5 p-0 text-sm text-white/60">
               {col.links.map((l) => (
                 <li>
-                  <a href={l.url} class={linkClass}>
+                  <a href={l.url} class={`${linkClass} inline-block py-1`}>
                     {l.title}
                   </a>
                 </li>
@@ -140,15 +140,15 @@ const importantInfo = [
       }
     </div>
 
-    <div class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-xs text-white/50 md:flex-row">
+    <div class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-xs text-white/50 md:flex-row max-phone:text-center">
       <p class="m-0">
         © Made with ❤️ in Coimbatore, India | Copyright © {new Date().getFullYear()} onwards, GoPocket.
       </p>
-      <ul class="m-0 flex list-none items-center gap-4 p-0">
+      <ul class="m-0 flex list-none items-center gap-3 p-0 flex-wrap justify-center">
         {
           socialLinks.map((s) => (
             <li>
-              <a href={s.url} target="_blank" rel="noopener" class={linkClass}>
+              <a href={s.url} target="_blank" rel="noopener" class={`${linkClass} px-2 py-1.5 min-h-[44px] inline-flex items-center active:opacity-75`}>
                 {s.title}
               </a>
             </li>

@@ -137,6 +137,7 @@
     scroll-behavior: smooth;
     interpolate-size: allow-keywords;
     font-size: 20px;
+    -webkit-tap-highlight-color: transparent;
 
     @media (width <= 1280px) {
       font-size: 18px;
@@ -145,11 +146,25 @@
     @media (width <= 987px) {
       font-size: 16px;
     }
+
+    @media (width <= 576px) {
+      font-size: 15px;
+    }
+
+    @media (width <= 360px) {
+      font-size: 14px;
+    }
   }
 
   body {
     -webkit-font-smoothing: antialiased;
+    touch-action: manipulation;
     @apply bg-bg text-text font-inter text-base leading-[1.2] tracking-[-0.01em];
+  }
+
+  body.is-nav-opened {
+    overflow: hidden !important;
+    touch-action: none !important;
   }
 
   h1,
@@ -164,14 +179,26 @@
 
   h1 {
     @apply font-heading text-h1 tracking-[-0.02em];
+    @media (width <= 576px) {
+      font-size: 2.2rem;
+      line-height: 1.1;
+    }
   }
 
   h2 {
     @apply font-heading text-h2 tracking-[-0.02em];
+    @media (width <= 576px) {
+      font-size: 2rem;
+      line-height: 1.15;
+    }
   }
 
   h3 {
     @apply font-heading text-h3 tracking-[-0.02em];
+    @media (width <= 576px) {
+      font-size: 1.35rem;
+      line-height: 1.25;
+    }
   }
 
   h4 {
@@ -185,11 +212,13 @@
   a {
     color: currentcolor;
     text-decoration: none;
+    touch-action: manipulation;
   }
 
   button {
     color: currentcolor;
     font: inherit;
+    touch-action: manipulation;
   }
 
   img,
@@ -205,3 +234,23 @@
     margin: 0;
   }
 }
+
+/* Touch feedback utilities */
+@layer utilities {
+  .touch-target {
+    min-height: 48px;
+    min-width: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .safe-pb {
+    padding-bottom: env(safe-area-inset-bottom, 1rem);
+  }
+  
+  .safe-pt {
+    padding-top: env(safe-area-inset-top, 1rem);
+  }
+}
+
