@@ -1,0 +1,112 @@
+---
+interface Props {
+  texts: string[];
+  direction?: 1 | -1;
+  class?: string;
+}
+
+const { texts, direction, class: className = "" } = Astro.props;
+---
+
+<sy-text-marquee
+  data-dir={direction}
+  class:list={[
+    "relative block w-screen max-w-full overflow-hidden opacity-0 [backdrop-filter:blur(6px)_saturate(1.05)] transition-opacity duration-200 ease-in-out [&.is-ready]:opacity-100",
+    className,
+  ]}
+>
+  <div class="outer flex translate-x-[var(--x)] will-change-transform">
+    <div class="inner flex w-fit items-center">
+      {
+        texts.map((t) => (
+          <div class="flex items-center [-webkit-text-fill-color:transparent] [-webkit-text-stroke-color:currentColor] [-webkit-text-stroke-width:2px] text-[4rem] font-semibold whitespace-nowrap text-[var(--c,var(--color-brand-1))] before:mx-[0.35em] before:block before:h-[0.2em] before:w-[0.2em] before:rounded-full before:bg-current before:content-[''] odd:[-webkit-text-fill-color:unset]">
+            {t}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</sy-text-marquee>
+
+<script>
+  import { addResizeObserver } from "../utils/observers";
+  import { addIntersectingTicker } from "../utils/globalTicker";
+
+  class TextMarquee extends HTMLElement {
+    x = 0;
+    textWidth = -1;
+    direction = 1;
+    html: string;
+    outerEl: HTMLElement;
+
+    constructor() {
+      super();
+
+      this.direction = Number(this.dataset.dir) || 1;
+      this.outerEl = this.querySelector(".outer") as HTMLElement;
+      this.html = this.outerEl.innerHTML;
+      this.x = Math.round(1000 * -this.direction * Math.random());
+
+      addResizeObserver(this);
+      addIntersectingTicker(this);
+    }
+
+    connectedCallback() {
+      document.fonts.ready.then(() => {
+        this.fill();
+        this.classList.add("is-ready");
+      });
+    }
+
+    onWidthResize() {
+      this.fill();
+    }
+
+    fill() {
+      const { html, outerEl } = this;
+
+      outerEl.innerHTML = html;
+
+      const bcr = outerEl.firstElementChild!.getBoundingClientRect();
+      const width = window.innerWidth;
+
+      if (!bcr.width) {
+        return;
+      }
+
+      const repeats = Math.ceil(width / bcr.width) * 2;
+
+      outerEl.innerHTML += html.repeat(repeats - 1);
+
+      [...outerEl.children].forEach((el, i) => {
+        if (i > 0) {
+          el.ariaHidden = "true";
+        }
+      });
+
+      this.textWidth = Math.round(outerEl.scrollWidth / 2);
+    }
+
+    tick() {
+      const txtWidth = this.textWidth;
+      let x = this.x;
+
+      const dir = this.direction;
+      x -=
+        (Math.min(Math.abs(window.scrollVelocity) * 0.4, 10) + 0.5) *
+        (window.scrollDirection || 1) *
+        dir;
+
+      if (x <= -txtWidth) {
+        x = 0;
+      } else if (x > 0) {
+        x = -txtWidth;
+      }
+
+      this.style.setProperty("--x", `${x}px`);
+      this.x = x;
+    }
+  }
+
+  customElements.define("sy-text-marquee", TextMarquee);
+</script>

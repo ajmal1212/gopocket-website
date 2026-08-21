@@ -1,0 +1,34 @@
+---
+import Button from "../components/Button.astro";
+import Container from "./Container.astro";
+import type { Link } from "../types";
+
+interface Props {
+  title: string;
+  text: string;
+  cta?: Link;
+}
+
+const { title, text, cta } = Astro.props;
+---
+
+<div class="sy-introducing">
+  <Container class="relative mb-32">
+    <div
+      class="relative z-[9] mx-auto flex max-w-[50rem] flex-col items-center justify-center gap-4 rounded-3xl p-4 text-center [backdrop-filter:blur(6px)_saturate(1.05)]"
+    >
+      <h2 class="max-w-[20em] leading-[1.1]" data-sy-reveal="words">
+        {title}
+      </h2>
+      <p class="max-w-[40em]" data-sy-reveal="lines">
+        {text}
+      </p>
+      {cta ? <Button {...cta} arrow class="cta" /> : null}
+      <div
+        data-gl-place
+        class="pointer-events-none absolute top-0 right-0 mt-[-2rem] h-[var(--s)] w-[var(--s)] [--s:18rem] max-tablet-sm:left-0 max-tablet-sm:-translate-x-[10%]"
+      >
+      </div>
+    </div>
+  </Container>
+</div>

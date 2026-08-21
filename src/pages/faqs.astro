@@ -1,0 +1,73 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Faqs from "../components/Faqs.astro";
+---
+
+<Layout
+  title="FAQs"
+  description="Answers to common questions about opening a GoPocket account, pricing, safety, mutual funds, IPOs and support."
+>
+  <Faqs
+    titleTag="h1"
+    title="Frequently Asked Questions"
+    mobileTitle="FAQs"
+    subtitle="Everything you need to know about investing and trading with GoPocket."
+    items={[
+      {
+        question: "Who can open a GoPocket account?",
+        answer:
+          "Any Indian resident with a PAN card and a bank account can open a GoPocket account online in about 5 minutes — no paperwork or branch visits required.",
+      },
+      {
+        question: "What does GoPocket cost to trade?",
+        answer:
+          "Just a flat ₹20 or 0.03% per order, whichever is lower, across equity, F&O, currencies and commodities — with zero custody fees on mutual funds.",
+      },
+      {
+        question: "Is my money and data safe with GoPocket?",
+        answer:
+          "Yes. GoPocket is registered with SEBI and follows bank-grade security practices, so your funds, holdings and personal data stay protected.",
+      },
+      {
+        question: "Can I invest in mutual funds and IPOs too?",
+        answer:
+          "Absolutely. Explore 40,000+ mutual funds with robo-advisory guidance, and apply for IPOs directly from the app in a few taps.",
+      },
+      {
+        question: "What if I need help along the way?",
+        answer:
+          "Our support team is available around the clock via chat, and Prime users get a dedicated relationship manager for personalised guidance.",
+      },
+      {
+        question: "How long does account opening actually take?",
+        answer:
+          "Most users complete e-KYC and start investing within 5 minutes. You'll need your PAN, Aadhaar and a bank account linked via UPI or net banking.",
+      },
+      {
+        question: "Does GoPocket charge for account maintenance?",
+        answer:
+          "There are no hidden account maintenance charges on the Standard plan. You only pay the flat ₹20 (or 0.03%, whichever is lower) per executed order.",
+      },
+      {
+        question: "Can I trade Futures & Options and currencies on GoPocket?",
+        answer:
+          "Yes. GoPocket supports F&O trading alongside currency pairs like USD-INR, EUR-INR, GBP-INR and JPY-INR, all from the same account and app.",
+      },
+      {
+        question: "What's the difference between Standard and Prime?",
+        answer:
+          "Standard covers everything you need to start investing at flat, transparent pricing. Prime adds priority chat and call support, a dedicated relationship manager, and custom research — pricing scales with your trading volume.",
+      },
+      {
+        question: "How do I complete Rekyc if my details have changed?",
+        answer:
+          "You can update and resubmit your KYC details directly from the GoPocket app or web platform whenever your PAN, address or bank details change, in line with SEBI's periodic Rekyc requirements.",
+      },
+      {
+        question: "Can I close my GoPocket account?",
+        answer:
+          "Yes — reach out to support and we'll guide you through settling any open positions and closing your account, no questions asked.",
+      },
+    ]}
+  />
+</Layout>

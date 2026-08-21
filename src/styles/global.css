@@ -1,0 +1,207 @@
+@import "tailwindcss";
+@import "./reveals.css";
+
+@theme {
+  /* fonts */
+  --font-heading: "Space Grotesk", sans-serif;
+  --font-inter: "Inter", sans-serif;
+
+  /* breakpoints — this codebase is desktop-first, so these are consumed
+     via Tailwind's max-* variants (max-tablet:, max-phone:, etc.) rather
+     than the default min-width variants. */
+  --breakpoint-phone-xs: 360px;
+  --breakpoint-phone-sm: 400px;
+  --breakpoint-phone: 576px;
+  --breakpoint-tablet-sm: 767px;
+  --breakpoint-tablet: 987px;
+  --breakpoint-desktop-xs: 1080px;
+  --breakpoint-desktop-sm: 1280px;
+  --breakpoint-desktop-md: 1536px;
+  --breakpoint-desktop-lg: 1680px;
+  --breakpoint-desktop-xl: 1920px;
+
+  /* colors */
+  --color-text: #070a26;
+  --color-text-alt: #758696;
+  --color-brand-1: #753ed7; /* GoPocket purple */
+  --color-brand-2: #f84b00; /* GoPocket orange */
+  --color-brand-3: #e5e7fb; /* light lavender */
+  --color-brand-4: #fde7d1; /* light amber */
+  --color-brand-5: #1e9e5b; /* success green */
+  --color-bg: #f7f7fb;
+
+  /* easings */
+  --ease-in-quad: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  --ease-in-cubic: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  --ease-in-quart: cubic-bezier(0.895, 0.03, 0.685, 0.22);
+  --ease-in-quint: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+  --ease-in-expo: cubic-bezier(0.95, 0.05, 0.795, 0.035);
+  --ease-in-circ: cubic-bezier(0.6, 0.04, 0.98, 0.335);
+  --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+  --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-out-circ: cubic-bezier(0.075, 0.82, 0.165, 1);
+  --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-in-out-quad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  --ease-in-out-cubic: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --ease-in-out-quart: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-in-out-quint: cubic-bezier(0.86, 0, 0.07, 1);
+  --ease-in-out-expo: cubic-bezier(1, 0, 0, 1);
+  --ease-in-out-circ: cubic-bezier(0.785, 0.135, 0.15, 0.86);
+
+  /* body text scale */
+  --text-xs: 0.8rem;
+  --text-sm: 0.9rem;
+  --text-base: 1rem;
+  --text-lg: 1.1rem;
+
+  /* heading scale (h1–h5) — sizes are in rem, so they ride the same
+     root font-size breakpoints as the rest of the site (see the html
+     rule below): 20px desktop / 18px desktop-sm / 16px tablet down. */
+  --text-h5: 1rem;
+  --text-h5--line-height: 1.4;
+  --text-h5--font-weight: 500;
+  --text-h4: 1.2rem;
+  --text-h4--line-height: 1.3;
+  --text-h4--font-weight: 500;
+  --text-h3: 1.5rem;
+  --text-h3--line-height: 1.2;
+  --text-h3--font-weight: 500;
+  --text-h2: 3rem;
+  --text-h2--line-height: 1.1;
+  --text-h2--font-weight: 500;
+  --text-h1: 3.4rem;
+  --text-h1--line-height: 1.05;
+  --text-h1--font-weight: 500;
+
+  /* keyframe-driven utilities */
+  --animate-plan-border: plan-border 5s linear infinite;
+}
+
+@keyframes plan-border {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(365deg);
+  }
+}
+
+:root {
+  /* reusable inline icons, referenced via arbitrary-value utilities
+     e.g. [mask:var(--icon-arrow)_no-repeat_center/1em_1em] — kept out of
+     @theme since they aren't a Tailwind theme scale, just shared values. */
+  --icon-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 21'%3E%3Cpath d='m16 9-6-6 2-1 8 8-1 1-7 7-2-1 6-6H0V9z'/%3E%3C/svg%3E");
+  --icon-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='253' height='251' fill='%23000' viewBox='0 0 253 251'%3E%3Cpath d='M250.06 8.59a17.57 17.57 0 0 0-28.72-2.11L92.92 164.79a7.5 7.5 0 0 1-11.97-.42l-30.77-43.92a27.8 27.8 0 0 0-45.52 31.87l62.97 89.95a19.22 19.22 0 0 0 31.53-.03l18.07-25.97 132.1-188.66a17.56 17.56 0 0 0 .7-19.02h.03Z'/%3E%3C/svg%3E");
+
+  /* hero background sweep — kept as a token since it's a 13-stop gradient,
+     too large/fragile to embed inline as a Tailwind arbitrary value. */
+  --hero-gradient: linear-gradient(
+    40deg,
+    var(--color-bg) 0%,
+    2.76008%,
+    rgb(255, 247, 237) 5.52017%,
+    9.87983%,
+    rgb(254, 238, 217) 14.2395%,
+    17.7994%,
+    rgb(252, 222, 192) 21.3592%,
+    24.4337%,
+    rgb(250, 207, 170) 27.5081%,
+    30.2589%,
+    rgb(247, 195, 165) 33.0097%,
+    35.5987%,
+    rgb(240, 185, 174) 38.1877%,
+    40.7767%,
+    rgb(231, 177, 191) 43.3657%,
+    46.6019%,
+    rgb(222, 173, 208) 49.8382%,
+    53.3981%,
+    rgb(212, 169, 223) 56.9579%,
+    60.356%,
+    rgb(204, 168, 232) 63.754%,
+    67.475%,
+    rgb(214, 195, 242) 71.196%,
+    75.0531%,
+    rgb(226, 217, 248) 78.9101%,
+    83.5457%,
+    rgb(238, 237, 253) 88.1812%,
+    94.0906%,
+    var(--color-bg) 100%
+  );
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    interpolate-size: allow-keywords;
+    font-size: 20px;
+
+    @media (width <= 1280px) {
+      font-size: 18px;
+    }
+
+    @media (width <= 987px) {
+      font-size: 16px;
+    }
+  }
+
+  body {
+    -webkit-font-smoothing: antialiased;
+    @apply bg-bg text-text font-inter text-base leading-[1.2] tracking-[-0.01em];
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0;
+    overflow-wrap: break-word;
+  }
+
+  h1 {
+    @apply font-heading text-h1 tracking-[-0.02em];
+  }
+
+  h2 {
+    @apply font-heading text-h2 tracking-[-0.02em];
+  }
+
+  h3 {
+    @apply font-heading text-h3 tracking-[-0.02em];
+  }
+
+  h4 {
+    @apply font-heading text-h4 tracking-[-0.02em];
+  }
+
+  h5 {
+    @apply font-heading text-h5 tracking-[-0.02em];
+  }
+
+  a {
+    color: currentcolor;
+    text-decoration: none;
+  }
+
+  button {
+    color: currentcolor;
+    font: inherit;
+  }
+
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  p {
+    margin: 0;
+  }
+}

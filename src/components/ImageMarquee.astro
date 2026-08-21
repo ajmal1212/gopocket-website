@@ -1,0 +1,137 @@
+---
+import type { Image } from "../types";
+
+interface Props {
+  images: Image[];
+  direction?: 1 | -1;
+}
+
+const { images, direction } = Astro.props;
+---
+
+<sy-image-marquee
+  data-dir={direction}
+  class="relative block w-full overflow-hidden pt-3 pb-16 opacity-0 transition-opacity duration-200 ease-in-out [&.is-ready]:opacity-100"
+>
+  <div class="inner grid gap-12 max-tablet-sm:gap-4">
+    {
+      images.map((img) => (
+        <div class="img h-12 w-24 [grid-column:1] [grid-row:1] will-change-transform max-tablet-sm:h-[5.5625rem] max-tablet-sm:w-[10.9375rem]">
+          <img {...img} class="h-full w-full object-contain" />
+        </div>
+      ))
+    }
+  </div>
+</sy-image-marquee>
+
+<script>
+  import { addResizeObserver } from "../utils/observers";
+  import { addIntersectingTicker } from "../utils/globalTicker";
+
+  import { gsap } from "gsap";
+
+  class ImageMarquee extends HTMLElement {
+    x = 0;
+    width = -1;
+    direction = 1;
+    ghosts: HTMLElement[] = [];
+    images: HTMLElement[] = [];
+    wrap!: (n: number) => number;
+
+    constructor() {
+      super();
+
+      this.images = Array.from(this.querySelectorAll(".img")) as HTMLElement[];
+      this.direction = Number(this.dataset.dir) || 1;
+
+      addResizeObserver(this);
+      addIntersectingTicker(this);
+    }
+
+    connectedCallback() {
+      this.reCalc();
+
+      this.classList.add("is-ready");
+    }
+
+    onWidthResize() {
+      this.reCalc();
+    }
+
+    reCalc() {
+      const { images } = this;
+
+      const inner = this.querySelector(".inner")!;
+
+      const fbcr = images[0].getBoundingClientRect();
+      const gap = parseInt(window.getComputedStyle(inner).columnGap, 10);
+
+      const width = Math.floor(fbcr.width + gap);
+
+      this.width = width;
+
+      this.fillScreen();
+
+      this.wrap = gsap.utils.wrap(-width, width * (this.images.length - 1));
+
+      this.x = Math.round(1000 * -this.direction * Math.random());
+    }
+
+    fillScreen() {
+      const images = this.images;
+      const width = this.width;
+      const innerWidth = window.innerWidth * 2;
+      const inner = this.querySelector(".inner")!;
+
+      this.ghosts.forEach((g) => {
+        const index = images.indexOf(g);
+        images.splice(index, 1);
+
+        g.remove();
+      });
+
+      this.ghosts = [];
+      const ghosts = this.ghosts;
+
+      const fillCount = Math.floor(innerWidth / width);
+
+      if (images.length < fillCount) {
+        for (let i = 0; i < fillCount - images.length; i++) {
+          const clone = images[i % images.length].cloneNode(
+            true,
+          ) as HTMLElement;
+
+          clone.ariaHidden = "true";
+          ghosts.push(clone);
+          images.push(clone);
+        }
+
+        inner.append(...ghosts);
+      }
+
+      this.images = images;
+    }
+
+    tick() {
+      const dir = this.direction;
+
+      this.x -=
+        (Math.min(Math.abs(window.scrollVelocity) * 0.4, 10) + 0.5) *
+        (window.scrollDirection || 1) *
+        dir;
+
+      const images = this.images;
+      const width = this.width;
+      const x = this.x;
+      const wrap = this.wrap;
+
+      images.forEach((item, i) => {
+        const xx = wrap(x + width * i);
+
+        item.style.transform = `translateX(${xx}px)`;
+      });
+    }
+  }
+
+  customElements.define("sy-image-marquee", ImageMarquee);
+</script>

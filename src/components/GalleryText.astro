@@ -1,0 +1,83 @@
+---
+import type { Link, Image } from "../types";
+import Button from "./Button.astro";
+import Gallery from "./Gallery.astro";
+import GradientBackground from "./GradientBackground.astro";
+import TextMarquee from "../components/TextMarquee.astro";
+import Container from "./Container.astro";
+
+interface Props {
+  images: Image[];
+  title: string;
+  text?: string;
+  cta?: Link;
+  marqueeTexts: string[];
+}
+
+const { title, text, cta, images, marqueeTexts } = Astro.props;
+---
+
+<div class="sy-gallery-text relative mt-32 pt-40">
+  <Container
+    class="row relative z-[9] flex flex-row-reverse items-center justify-end gap-12 rounded-3xl p-8 [backdrop-filter:blur(6px)_saturate(1.05)] max-tablet:gap-8 max-tablet-sm:flex-col-reverse max-phone:px-0 max-phone:py-4"
+  >
+    <div class="flex flex-1 flex-col items-start py-4">
+      <h2
+        class="mb-4 max-w-[10em] text-[2rem] leading-none font-semibold"
+        data-sy-reveal="words"
+      >
+        {title}
+      </h2>
+      <p class="max-w-[25em]" data-sy-reveal="lines">{text}</p>
+      {cta ? <Button {...cta} arrow class="mt-6" /> : null}
+    </div>
+    <Gallery
+      class="max-w-[32rem] min-h-[22rem] max-desktop-sm:max-w-[27rem] max-tablet:max-w-[25rem]"
+      images={images}
+    />
+  </Container>
+  <TextMarquee
+    class="z-[9] mt-24 py-8 [--c:var(--color-white)]"
+    texts={marqueeTexts}
+    direction={-1}
+  />
+  <GradientBackground />
+</div>
+
+<script>
+  import gsap from "gsap";
+  import ScrollTrigger from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  interface GalleryEl extends HTMLElement {
+    goto: (index: number) => void;
+  }
+
+  const section = document.querySelector<HTMLElement>(".sy-gallery-text");
+  const row = section?.querySelector<HTMLElement>(".row");
+  const gallery = section?.querySelector<GalleryEl>("sy-gallery");
+  const count = gallery?.querySelectorAll(".img").length ?? 0;
+
+  if (row && gallery && count > 1) {
+    let current = 0;
+
+    ScrollTrigger.create({
+      trigger: row,
+      pin: row,
+      start: "center center",
+      end: () => `+=${window.innerHeight * (count - 1)}`,
+      invalidateOnRefresh: true,
+      onUpdate: (st) => {
+        const index = Math.min(
+          count - 1,
+          Math.round(st.progress * (count - 1)),
+        );
+        if (index !== current) {
+          current = index;
+          gallery.goto(index);
+        }
+      },
+    });
+  }
+</script>

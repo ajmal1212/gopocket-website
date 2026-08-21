@@ -1,0 +1,101 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Section from "../components/Section.astro";
+import Container from "../components/Container.astro";
+import ImageMarquee from "../components/ImageMarquee.astro";
+
+import badgeSebi from "../assets/badges/sebi.svg";
+import badgeNse from "../assets/badges/nse.svg";
+import badgeBse from "../assets/badges/bse.svg";
+import badgeMcx from "../assets/badges/mcx.svg";
+import badgeCdsl from "../assets/badges/cdsl.svg";
+import badgeNsdl from "../assets/badges/nsdl.svg";
+import badgeNcdex from "../assets/badges/ncdex.svg";
+import badgeAmfi from "../assets/badges/amfi.svg";
+
+const stats = [
+  { value: "30,000+", label: "Stocks & instruments" },
+  { value: "40,000+", label: "Mutual fund schemes" },
+  { value: "₹20", label: "Flat brokerage per order" },
+  { value: "24/7", label: "Customer support" },
+];
+---
+
+<Layout
+  title="About"
+  description="GoPocket exists to make investing and trading simple, affordable and accessible for every Indian — learn about our mission and technology."
+>
+  <Section class="pt-40">
+    <Container class="text-center">
+      <h1 class="mx-auto max-w-[16em]" data-sy-reveal="words">
+        Democratizing investing for every Indian
+      </h1>
+      <p
+        class="mx-auto mt-6 max-w-[40em] text-lg text-text-alt"
+        data-sy-reveal="lines"
+      >
+        At GoPocket, finance and technology join hands to make online investing and trading simple, affordable and accessible — no matter where you're starting from.
+      </p>
+    </Container>
+  </Section>
+
+  <Section class="pt-0">
+    <Container class="grid grid-cols-1 gap-12 md:grid-cols-2">
+      <div>
+        <h2 data-sy-reveal="words">Our mission</h2>
+        <p class="mt-4 text-text-alt" data-sy-reveal="lines">
+          Investing in India has long been held back by high fees, confusing
+          jargon and clunky platforms. GoPocket was built to remove those
+          barriers — a single, fast, honest platform where anyone can start
+          investing in minutes, not days.
+        </p>
+      </div>
+      <div>
+        <h2 data-sy-reveal="words">How we build</h2>
+        <p class="mt-4 text-text-alt" data-sy-reveal="lines">
+          We pair modern technology with deep market infrastructure — robo-advisory,
+          real-time data and a lightweight app — so every order executes the
+          moment you need it to, with nothing hidden in the fine print.
+        </p>
+      </div>
+    </Container>
+  </Section>
+
+  <Section class="pt-0">
+    <Container>
+      <div class="grid grid-cols-2 gap-8 rounded-2xl bg-brand-3 p-8 text-center md:grid-cols-4">
+        {
+          stats.map((s) => (
+            <div>
+              <p class="font-heading text-h3 text-brand-1">{s.value}</p>
+              <p class="mt-1 text-sm text-text-alt">{s.label}</p>
+            </div>
+          ))
+        }
+      </div>
+    </Container>
+  </Section>
+
+  <Section class="pt-0 pb-20 text-center">
+    <Container>
+      <h2 class="mx-auto max-w-[20em]" data-sy-reveal="words">
+        Regulated and trusted
+      </h2>
+      <p class="mx-auto mt-4 max-w-[32em] text-text-alt" data-sy-reveal="lines">
+        GoPocket is registered with SEBI and works within the frameworks set by India's leading exchanges and depositories.
+      </p>
+    </Container>
+    <ImageMarquee
+      images={[
+        { src: badgeSebi.src, alt: "Registered with SEBI" },
+        { src: badgeNse.src, alt: "NSE" },
+        { src: badgeBse.src, alt: "BSE" },
+        { src: badgeMcx.src, alt: "MCX" },
+        { src: badgeCdsl.src, alt: "CDSL" },
+        { src: badgeNsdl.src, alt: "NSDL" },
+        { src: badgeNcdex.src, alt: "NCDEX" },
+        { src: badgeAmfi.src, alt: "AMFI" },
+      ]}
+    />
+  </Section>
+</Layout>

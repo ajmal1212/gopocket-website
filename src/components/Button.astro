@@ -1,0 +1,106 @@
+---
+type CommonProps = {
+  class?: string;
+  color?: "primary" | "primary-alt";
+  size?: "sm" | "md";
+  arrow?: boolean;
+  title: string;
+  revealable?: boolean;
+  manualReveal?: boolean;
+};
+
+type AnchorProps = {
+  url: string;
+  target?: string;
+  type?: never;
+} & CommonProps;
+
+type ButtonProps = {
+  url?: never;
+  target?: never;
+  type?: "button" | "submit" | "reset";
+} & CommonProps;
+
+type Props = AnchorProps | ButtonProps;
+
+const {
+  title,
+  url,
+  target,
+  class: className = "",
+  type = "button",
+  color = "primary",
+  arrow = false,
+  revealable = true,
+  manualReveal = false,
+} = Astro.props;
+
+const Element = url ? "a" : "button";
+
+const attrs =
+  Element === "a"
+    ? {
+        target,
+        href: url,
+      }
+    : {
+        type,
+      };
+
+const isAlt = color === "primary-alt";
+const bgClass = isAlt ? "bg-brand-3" : "bg-brand-1";
+const textClass = isAlt ? "text-text" : "text-white";
+const ringClass = isAlt ? "after:border-brand-3" : "after:border-brand-1";
+const arrowBgClass = isAlt ? "after:bg-brand-3" : "after:bg-brand-1";
+
+const frontClip = arrow
+  ? "[clip-path:inset(0.95em_1em_0.95em_calc(100%-3em)_round_99px)]"
+  : "[clip-path:inset(50%_round_99px)]";
+const frontHoverClip = arrow
+  ? "group-hover:[clip-path:inset(-25%_-5%_-25%_0%_round_99px)] group-focus:[clip-path:inset(-25%_-5%_-25%_0%_round_99px)]"
+  : "group-hover:[clip-path:inset(-100%_0_round_99px)] group-focus:[clip-path:inset(-100%_0_round_99px)]";
+
+const arrowClasses =
+  "pr-[1em] after:ml-[1em] after:block after:h-[2em] after:w-[2em] after:content-[''] after:[mask:var(--icon-arrow)_no-repeat_center/1em_1em]";
+---
+
+<Element
+  class:list={[
+    "group relative m-0 inline-block cursor-pointer overflow-hidden rounded-full border-0 bg-transparent p-0 text-xs font-semibold tracking-[0.02em]",
+    revealable &&
+      "[clip-path:inset(0_100%_0_0_round_100px)] translate-x-8 origin-left transition-[opacity,clip-path,transform] duration-[0.4s] ease-out-cubic [&.is-in]:[clip-path:inset(0_0_round_100px)] [&.is-in]:translate-x-0",
+    className.toString(),
+  ]}
+  {...attrs}
+  data-sy-reveal={revealable ? "" : undefined}
+  data-sy-reveal-manual={manualReveal ? "" : undefined}
+>
+  <span
+    class:list={[
+      "relative block after:pointer-events-none after:absolute after:inset-0 after:z-[2] after:rounded-[99px] after:border-2 after:content-['']",
+      ringClass,
+    ]}
+  >
+    <span
+      class:list={[
+        "absolute inset-0 z-[2] flex items-center bg-white px-[1.5em] py-[0.9375em] leading-[1.25] text-brand-1 transition-[clip-path] duration-[0.25s] ease-out-cubic",
+        frontClip,
+        frontHoverClip,
+        arrow && [arrowClasses, "after:bg-brand-1"],
+      ]}
+    >
+      {title}
+    </span>
+    <span
+      aria-hidden
+      class:list={[
+        "flex items-center px-[1.5em] py-[0.9375em] leading-[1.25]",
+        bgClass,
+        textClass,
+        arrow && [arrowClasses, arrowBgClass],
+      ]}
+    >
+      {title}
+    </span>
+  </span>
+</Element>

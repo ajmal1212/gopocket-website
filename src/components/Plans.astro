@@ -1,0 +1,89 @@
+---
+import Button from "./Button.astro";
+import Container from "./Container.astro";
+import type { Link } from "../types";
+
+interface Item {
+  title: string;
+  price: {
+    amount: string;
+    duration: string;
+  };
+  link: Link;
+  features: {
+    title: string;
+    disabled?: boolean;
+  }[];
+}
+interface Props {
+  title: string;
+  subtitle: string;
+  items: [Item, Item];
+}
+
+const { title, subtitle, items } = Astro.props;
+---
+
+<div class="sy-plans relative z-[2] my-8">
+  <Container>
+    <div
+      data-gl-place
+      data-gl-place-factor="1.5"
+      class="pointer-events-none mx-auto mt-12 mb-20 h-[var(--s)] w-[var(--s)] [--s:18.75rem] max-tablet:[--s:16rem]"
+    >
+    </div>
+
+    <h2 class="mb-[0.1em] text-center uppercase" data-sy-reveal="words">
+      {title}
+    </h2>
+    <p
+      class="mx-auto mb-[2em] max-w-[32em] text-center text-base text-text-alt"
+      data-sy-reveal="lines"
+    >
+      {subtitle}
+    </p>
+
+    <div class="flex justify-center gap-8 max-tablet-sm:flex-col max-tablet-sm:items-center">
+      {
+        items.map((item, i) => (
+          <div class="relative w-full max-w-80 overflow-hidden rounded-2xl bg-white p-[2px] shadow-[0_4px_20px_rgba(0,0,0,0.05)] last:bg-transparent last:after:absolute last:after:top-[-50%] last:after:left-[-50%] last:after:-z-[1] last:after:h-[200%] last:after:w-[200%] last:after:animate-plan-border last:after:rounded-2xl last:after:[background:linear-gradient(135deg,var(--color-brand-3)_0%,var(--color-brand-1)_100%)] last:after:content-['']">
+            <div class="rounded-[0.9rem] bg-white p-8">
+              <h3
+                class="font-inter text-base font-medium"
+                data-sy-reveal="words"
+              >
+                {item.title}
+              </h3>
+              <p class="m-0 flex items-center gap-[0.1em] font-heading text-[3rem] font-normal">
+                <span data-sy-reveal="words">{item.price.amount}</span>
+                <span
+                  class="pt-[0.5em] font-inter text-sm"
+                  data-sy-reveal="words"
+                >
+                  /{item.price.duration}
+                </span>
+              </p>
+              <ul class="my-8 flex list-none flex-col justify-center gap-[0.75em] p-0 text-sm">
+                {item.features.map((feat) => (
+                  <li
+                    class:list={[
+                      "flex items-center gap-[0.5em] before:block before:h-[0.6em] before:w-[0.6em] before:content-[''] before:[mask:var(--icon-check)_no-repeat_center/contain] before:bg-current before:opacity-0 before:transition-opacity before:duration-300 before:ease-out-cubic [&.is-in]:before:opacity-100",
+                      feat.disabled ? "text-text-alt" : "text-brand-5",
+                    ]}
+                    data-sy-reveal="lines"
+                  >
+                    {feat.title}
+                  </li>
+                ))}
+              </ul>
+              <Button
+                {...item.link}
+                color={i === 0 ? "primary-alt" : "primary"}
+              />
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </Container>
+</div>

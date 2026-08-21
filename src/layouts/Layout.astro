@@ -1,0 +1,239 @@
+---
+import { Font } from "astro:assets";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import SmoothScroll from "../components/SmoothScroll.astro";
+import { useTranslations } from "../i18n/utils";
+import type { NavEntry } from "../types";
+import "../styles/global.css";
+import {
+  ChartLine,
+  Wheat,
+  GraduationCap,
+  Globe,
+  Briefcase,
+  Landmark,
+  ChartPie,
+  ShieldCheck,
+  Zap,
+  Vote,
+  Wallet,
+  Smartphone,
+  Mail,
+  Banknote,
+  ToggleRight,
+  MapPin,
+  BadgeIndianRupee,
+  Signature,
+  RotateCcw,
+  UserX,
+} from "@lucide/astro";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title: _title,
+  description = "Investing and trading made simple, affordable and accessible for every Indian. Stocks, mutual funds, IPOs, F&O, currencies and commodities — all on one platform.",
+} = Astro.props;
+const t = useTranslations();
+
+// Mirrors GoPocket's real header structure (verified against gopocket.in).
+// "Research", "Refer & Earn", "Partner with Us" and everything inside
+// "Sign In" don't have corresponding pages/platforms in this rebuild, so
+// they're placeholder (#) links rather than pointing at GoPocket's real
+// live login/account-management subdomains.
+const navLinks: NavEntry[] = [
+  { title: "Products", url: "/products" },
+  { title: "Investments", url: "/investments" },
+  {
+    title: "Research",
+    children: [
+      {
+        title: "Equity",
+        url: "#",
+        icon: ChartLine,
+        description:
+          "Live NSE & BSE charts, screeners and brokerage calculators.",
+      },
+      {
+        title: "Commodity",
+        url: "#",
+        icon: Wheat,
+        description:
+          "Trade agri, metal and energy commodities with expert insights.",
+      },
+      {
+        title: "Learn",
+        url: "#",
+        icon: GraduationCap,
+        description: "Guides and tutorials to sharpen your trading knowledge.",
+      },
+    ],
+  },
+  { title: "Refer & Earn", url: "#" },
+  { title: "Partner with Us", url: "#" },
+  {
+    title: "Rekyc",
+    children: [
+      {
+        title: "Mobile Modification",
+        url: "#",
+        icon: Smartphone,
+        description: "Update the mobile number linked to your account.",
+      },
+      {
+        title: "Email Modification",
+        url: "#",
+        icon: Mail,
+        description: "Update the email address linked to your account.",
+      },
+      {
+        title: "Bank Addition",
+        url: "#",
+        icon: Banknote,
+        description: "Add or change your linked bank account.",
+      },
+      {
+        title: "Segment Activation",
+        url: "#",
+        icon: ToggleRight,
+        description: "Enable new trading segments like F&O or currency.",
+      },
+      {
+        title: "Address Updation",
+        url: "#",
+        icon: MapPin,
+        description: "Update your registered communication address.",
+      },
+      {
+        title: "Financial Updation",
+        url: "#",
+        icon: BadgeIndianRupee,
+        description: "Update your income and financial details on file.",
+      },
+      {
+        title: "DDPI (POA)",
+        url: "#",
+        icon: Signature,
+        description: "Set up Demat Debit and Pledge Instruction online.",
+      },
+      {
+        title: "Reactivation",
+        url: "#",
+        icon: RotateCcw,
+        description: "Reactivate a dormant or deactivated account.",
+      },
+      {
+        title: "Account Closure",
+        url: "#",
+        icon: UserX,
+        description: "Start the process to close your GoPocket account.",
+      },
+    ],
+  },
+  {
+    title: "Sign In",
+    children: [
+      {
+        title: "Web Trade",
+        url: "#",
+        icon: Globe,
+        description: "Trade from your browser with our full web terminal.",
+      },
+      {
+        title: "Back office",
+        url: "#",
+        icon: Briefcase,
+        description: "View contract notes, ledgers and account reports.",
+      },
+      {
+        title: "Bonds",
+        url: "#",
+        icon: Landmark,
+        description: "Explore and invest in government and corporate bonds.",
+      },
+      {
+        title: "Mutual Funds",
+        url: "#",
+        icon: ChartPie,
+        description: "Browse and invest in 40,000+ mutual fund schemes.",
+      },
+      {
+        title: "Insurance",
+        url: "#",
+        icon: ShieldCheck,
+        description: "Protect what matters with GoPocket insurance plans.",
+      },
+      {
+        title: "Insta Options",
+        url: "#",
+        icon: Zap,
+        description: "Fast, simplified options trading in a few taps.",
+      },
+      {
+        title: "E-Voting (CDSL)",
+        url: "#",
+        icon: Vote,
+        description: "Cast your vote as a shareholder via CDSL e-voting.",
+      },
+      {
+        title: "Payin",
+        url: "#",
+        icon: Wallet,
+        description: "Add funds to your trading account securely.",
+      },
+    ],
+  },
+];
+
+const titleSuffix = " | GoPocket - Infinite Investment Options. One Platform";
+const ogType = "website";
+const ogUrl = "https://gopocket.in/";
+const ogImage = "https://gopocket.in/og.png";
+const title = `${_title}${titleSuffix}`;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <Font cssVariable="--font-heading" preload />
+    <Font cssVariable="--font-inter" preload />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta property="og:title" content={title} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={ogUrl} />
+    <meta property="og:image" content={ogImage} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a
+      href="#main"
+      class="absolute inset-x-0 z-[100] mx-auto w-min -translate-y-full bg-brand-1 p-2 whitespace-nowrap text-white transition-transform duration-300 ease-linear focus:translate-y-0"
+      >{t("accessibility.skip-to-content")}</a
+    >
+    <Header
+      logoUrl="/"
+      logoAlt="GoPocket"
+      navLinks={navLinks}
+      currentPath={Astro.url.pathname}
+      link2={{
+        title: "Open Account",
+        url: "/#pricing",
+      }}
+    />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer logoUrl="/" logoAlt="GoPocket" />
+    <SmoothScroll />
+  </body>
+</html>
+
+<script>
+  import "../utils/reveals";
+</script>

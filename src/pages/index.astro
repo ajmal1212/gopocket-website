@@ -1,0 +1,245 @@
+---
+import Layout from "../layouts/Layout.astro";
+import HeroHome from "../components/HeroHome.astro";
+import TextMarquee from "../components/TextMarquee.astro";
+import GalleryText from "../components/GalleryText.astro";
+import ImageMarquee from "../components/ImageMarquee.astro";
+import Faqs from "../components/Faqs.astro";
+import StepsTimeline from "../components/StepsTimeline.astro";
+import Plans from "../components/Plans.astro";
+import Statements from "../components/Statements.astro";
+import Introducing from "../components/Introducing.astro";
+import GL from "../components/GL.astro";
+
+import badgeSebi from "../assets/badges/sebi.svg";
+import badgeNse from "../assets/badges/nse.svg";
+import badgeBse from "../assets/badges/bse.svg";
+import badgeMcx from "../assets/badges/mcx.svg";
+import badgeCdsl from "../assets/badges/cdsl.svg";
+import badgeNsdl from "../assets/badges/nsdl.svg";
+import badgeNcdex from "../assets/badges/ncdex.svg";
+import badgeAmfi from "../assets/badges/amfi.svg";
+---
+
+<Layout title="Home">
+  <HeroHome
+    title="One Platform<span class='line2'>more <span class='accent'>Possibilities</span></span>"
+    subtitle="At GoPocket, Finance and Technology Join Hands to Make Your Online Trading awesome."
+    cta={{
+      title: "Open Free Account",
+      url: "#pricing",
+    }}
+  />
+
+  <div id="products">
+    <Introducing
+      title="Finance and technology, join hands"
+      text="Explore 30,000+ stocks and 40,000+ mutual funds worldwide, trade equity, F&O, currencies and commodities, and track it all from one clean dashboard — built to make investing simple, transparent and accessible."
+      cta={{
+        title: "Explore Products",
+        url: "#pricing",
+      }}
+    />
+  </div>
+
+  <StepsTimeline
+    title="How it works"
+    items={[
+      {
+        title: "Open your account in 5 minutes",
+        text: "Sign up online with your PAN and Aadhaar, complete e-KYC, and you're ready to invest — no paperwork, no branch visits.",
+      },
+      {
+        title: "Add funds & build your watchlist",
+        text: "Link your bank account, add funds instantly, and add stocks, mutual funds or IPOs to your watchlist in a single tap.",
+      },
+      {
+        title: "Invest and trade with confidence",
+        text: "Buy or sell in a click, track your portfolio in real time, and get research-backed insights whenever you need them.",
+      },
+    ]}
+  />
+
+  <GalleryText
+    title="Everything you need to invest, in one app"
+    text="From equity and mutual funds to IPOs, futures & options, currencies and commodities — trade it all from a single, elegant platform built for speed and clarity."
+    cta={{
+      title: "Try GoPocket Today",
+      url: "#pricing",
+    }}
+    images={[
+      {
+        alt: "GoPocket web platform — sector-wise watchlists and option chain",
+        src: "/what-we-offer-1-p-800.png",
+      },
+      {
+        alt: "GoPocket web platform — equity and commodity dashboard",
+        src: "/what-we-offer-2.png",
+      },
+      {
+        alt: "GoPocket web platform — holdings and top sectors overview",
+        src: "/what-we-offer-3.png",
+      },
+    ]}
+    marqueeTexts={[
+      "Flat ₹20 Brokerage",
+      "Zero Custody Fees on Mutual Funds",
+      "30,000+ Stocks Worldwide",
+      "5-Minute Account Opening",
+    ]}
+  />
+
+  <Statements
+    items={[
+      {
+        title: "Built for every Indian investor",
+        text: "Whether you're placing your first trade or managing a diversified portfolio, GoPocket adapts to how you invest.",
+      },
+      {
+        title: "Powered by technology",
+        text: "Real-time data, robo-advisory and a lightning-fast platform mean your orders execute the moment you need them to.",
+      },
+      {
+        title: "Trusted, transparent, secure",
+        text: "Regulated by SEBI with bank-grade security — no hidden fees, no fine print, just honest investing.",
+      },
+    ]}
+  />
+
+  <TextMarquee
+    class="z-[9] py-8"
+    texts={[
+      "Flat ₹20 Brokerage",
+      "40,000+ Mutual Funds",
+      "Regulated by SEBI",
+      "24/7 Customer Support",
+    ]}
+  />
+
+  <div id="pricing">
+    <Plans
+      title="Pricing & Plans"
+      subtitle="Transparent, flat-fee pricing with no hidden charges. Pay only for what you trade."
+      items={[
+        {
+          title: "Standard",
+          price: {
+            amount: "₹20",
+            duration: "order",
+          },
+          link: {
+            title: "Open Free Account",
+            url: "#",
+          },
+          features: [
+            { title: "Flat ₹20 or 0.03% per order — whichever is lower" },
+            { title: "Zero custody fees on Mutual Funds" },
+            { title: "Priority chat support", disabled: true },
+            { title: "Dedicated relationship manager", disabled: true },
+            { title: "Custom research & advisory", disabled: true },
+          ],
+        },
+        {
+          title: "Prime",
+          price: {
+            amount: "Custom",
+            duration: "trading volume",
+          },
+          link: {
+            title: "Talk to an Expert",
+            url: "#",
+          },
+          features: [
+            { title: "Everything in Standard" },
+            { title: "Zero custody fees on Mutual Funds" },
+            { title: "Priority chat & call support" },
+            { title: "Dedicated relationship manager" },
+            { title: "Custom research & advisory" },
+          ],
+        },
+      ]}
+    />
+  </div>
+
+  <div id="faqs">
+    <Faqs
+      title="Frequently Asked Questions"
+      mobileTitle="FAQs"
+      subtitle="Quick answers about investing and trading with GoPocket."
+      items={[
+        {
+          question: "Who can open a GoPocket account?",
+          answer:
+            "Any Indian resident with a PAN card and a bank account can open a GoPocket account online in about 5 minutes — no paperwork or branch visits required.",
+        },
+        {
+          question: "What does GoPocket cost to trade?",
+          answer:
+            "Just a flat ₹20 or 0.03% per order, whichever is lower, across equity, F&O, currencies and commodities — with zero custody fees on mutual funds.",
+        },
+        {
+          question: "Is my money and data safe with GoPocket?",
+          answer:
+            "Yes. GoPocket is registered with SEBI and follows bank-grade security practices, so your funds, holdings and personal data stay protected.",
+        },
+        {
+          question: "Can I invest in mutual funds and IPOs too?",
+          answer:
+            "Absolutely. Explore 40,000+ mutual funds with robo-advisory guidance, and apply for IPOs directly from the app in a few taps.",
+        },
+        {
+          question: "What if I need help along the way?",
+          answer:
+            "Our support team is available around the clock via chat, and Prime users get a dedicated relationship manager for personalised guidance.",
+        },
+      ]}
+    />
+    <p class="text-center">
+      <a
+        href="/faqs"
+        class="relative text-sm text-brand-1 before:pointer-events-none before:absolute before:top-[115%] before:left-0 before:h-[2px] before:w-full before:origin-right before:scale-x-0 before:bg-current before:transition-transform before:duration-300 before:ease-out-expo before:content-[''] hover:before:origin-left hover:before:scale-x-100 focus:before:origin-left focus:before:scale-x-100"
+      >
+        See all FAQs →
+      </a>
+    </p>
+  </div>
+
+  <ImageMarquee
+    images={[
+      {
+        src: badgeSebi.src,
+        alt: "Registered with SEBI",
+      },
+      {
+        src: badgeNse.src,
+        alt: "NSE",
+      },
+      {
+        src: badgeBse.src,
+        alt: "BSE",
+      },
+      {
+        src: badgeMcx.src,
+        alt: "MCX",
+      },
+      {
+        src: badgeCdsl.src,
+        alt: "CDSL",
+      },
+      {
+        src: badgeNsdl.src,
+        alt: "NSDL",
+      },
+      {
+        src: badgeNcdex.src,
+        alt: "NCDEX",
+      },
+      {
+        src: badgeAmfi.src,
+        alt: "AMFI",
+      },
+    ]}
+  />
+
+  <GL />
+</Layout>

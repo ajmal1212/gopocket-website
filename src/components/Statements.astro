@@ -1,0 +1,53 @@
+---
+import RectReveal from "../components/RectReveal.astro";
+import Container from "./Container.astro";
+
+interface Props {
+  items: { title: string; text: string }[];
+}
+
+const { items } = Astro.props;
+
+const boxColors = [
+  "bg-bg text-text",
+  "bg-brand-1 text-brand-3",
+  "bg-brand-3 text-text",
+];
+---
+
+<div class="sy-statements relative z-[9] mb-0">
+  <RectReveal ignoreLast>
+    {
+      items.map(({ title, text }, i) => (
+        <div
+          class:list={[
+            "box sticky top-0 flex h-screen w-full flex-col items-center justify-center text-center will-change-[clip-path] [grid-column:1] [grid-row:1]",
+            boxColors[i] ?? boxColors[0],
+          ]}
+        >
+          <Container>
+            <div class="flex flex-col items-center justify-center">
+              <h2
+                class="leading-[1.3]"
+                data-sy-reveal={i === 0 ? "words" : undefined}
+              >
+                {title}
+              </h2>
+              <p
+                class="max-w-[40em]"
+                data-sy-reveal={i === 0 ? "lines" : undefined}
+              >
+                {text}
+              </p>
+            </div>
+          </Container>
+        </div>
+      ))
+    }
+  </RectReveal>
+  <div
+    data-gl-place="0"
+    class="pointer-events-none absolute inset-x-0 bottom-0 mx-auto h-[var(--s)] w-[var(--s)] [--s:17rem] max-tablet:bottom-1/2"
+  >
+  </div>
+</div>

@@ -1,0 +1,19 @@
+---
+// Vertical-rhythm wrapper for new pages (Products/About/FAQs). Existing
+// homepage sections keep their own bespoke spacing values as-is — this
+// isn't retrofitted onto them, to avoid shifting the current layout.
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+
+<section
+  class:list={[
+    "py-28 max-tablet:py-20 max-phone:py-14",
+    className,
+  ]}
+>
+  <slot />
+</section>

@@ -1,0 +1,91 @@
+---
+import Container from "./Container.astro";
+
+interface Props {
+  title: string;
+  items: {
+    title: string;
+    text: string;
+  }[];
+}
+
+const { title, items } = Astro.props;
+---
+
+<sy-steps-timeline class="relative z-[9] my-28 block">
+  <Container class="relative z-[2]">
+    <div class="wrapper flex flex-col items-start justify-start">
+      <div class="relative max-tablet:contents">
+        <h2 class="mb-[1em] max-w-[10em] leading-none" data-sy-reveal="words">
+          {title}
+        </h2>
+      </div>
+      <div
+        class="items-wrapper relative flex pl-16 [backdrop-filter:blur(6px)_saturate(1.05)] before:mr-12 before:block before:min-h-full before:min-w-[2px] before:bg-brand-3 before:content-[''] max-desktop-sm:max-w-[34rem] max-desktop-xs:max-w-[30rem] max-tablet-sm:max-w-[36rem] max-tablet-sm:self-center max-tablet-sm:pl-0 max-tablet-sm:before:mr-6"
+      >
+        <div class="flex w-full max-w-[24rem] flex-col [counter-reset:items]">
+          {
+            items.map((item, i) => (
+              <div class:list={["item", i === 0 && "is-active"]}>
+                <div class="relative flex flex-col gap-2 px-4 py-8 before:absolute before:top-0 before:right-[calc(100%+3rem+4rem)] before:bottom-0 before:m-auto before:flex before:w-0 before:translate-x-full before:items-center before:justify-center before:border-r-2 before:border-transparent before:pr-[calc(4rem-2px)] before:text-center before:text-[1.2rem] before:font-medium before:opacity-50 before:transition-colors before:duration-200 before:ease-in-out-cubic before:content-[counter(items,decimal-leading-zero)] before:[counter-increment:items] max-tablet-sm:before:right-[calc(100%+1.5rem+4rem)] [.item.is-active_&]:before:border-r-brand-1 [.item.is-active_&]:before:opacity-100">
+                  <h3 class="text-[1.2rem]" data-sy-reveal="words">
+                    {item.title}
+                  </h3>
+                  <p class="text-xs" data-sy-reveal="lines">
+                    {item.text}
+                  </p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+    <div
+      data-gl-place="0"
+      data-gl-place-factor="1.05"
+      class="pointer-events-none absolute top-0 right-[10%] bottom-0 h-[var(--s)] w-[var(--s)] [--s:18rem] max-tablet:top-[-20vh]"
+    >
+    </div>
+    <div
+      data-gl-place="1"
+      data-gl-place-factor="1.01"
+      class="pointer-events-none absolute top-[200vh] right-[10%] h-[var(--s)] w-[var(--s)] [--s:18rem] max-tablet:top-[100vh]"
+    >
+    </div>
+  </Container>
+</sy-steps-timeline>
+
+<script>
+  import gsap from "gsap";
+  import ScrollTrigger from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  class StepsTimeline extends HTMLElement {
+    connectedCallback() {
+      const itemsWrapper = this.querySelector(".items-wrapper");
+      const wrapper = this.querySelector(".wrapper");
+      const items = Array.from(this.querySelectorAll<HTMLElement>(".item"));
+      let current = 0;
+
+      new ScrollTrigger({
+        trigger: itemsWrapper,
+        pin: wrapper,
+        start: "center center",
+        end: () => `+=${window.innerHeight * 2}px`,
+        invalidateOnRefresh: true,
+        onUpdate: (st) => {
+          const index = Math.round(st.progress * (items.length - 1));
+          if (index !== current) {
+            items[current].classList.remove("is-active");
+            items[index].classList.add("is-active");
+            current = index;
+          }
+        },
+      });
+    }
+  }
+
+  customElements.define("sy-steps-timeline", StepsTimeline);
+</script>

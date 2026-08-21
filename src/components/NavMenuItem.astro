@@ -1,0 +1,82 @@
+---
+import { ChevronDown } from "@lucide/astro";
+import NavMenuItem from "./NavMenuItem.astro";
+import type { NavEntry } from "../types";
+
+interface Props {
+  item: NavEntry;
+  depth?: 0 | 1;
+  currentPath?: string;
+}
+
+const { item, depth = 0, currentPath = "" } = Astro.props;
+const isDropdown = "children" in item;
+const isActive =
+  depth === 0 &&
+  !isDropdown &&
+  item.url !== "#" &&
+  currentPath === (item.url.split("#")[0] || "/");
+
+const Icon = item.icon;
+const description = "description" in item ? item.description : undefined;
+
+const triggerClass =
+  depth === 0
+    ? "flex items-center gap-1 whitespace-nowrap transition-colors duration-200 hover:text-brand-1 max-tablet:w-full max-tablet:justify-center max-tablet:py-1"
+    : "flex w-full items-center justify-between gap-2 rounded-md px-3 py-2 transition-colors duration-200 hover:bg-brand-3/50 max-tablet:justify-center max-tablet:hover:bg-transparent";
+
+const linkClass =
+  depth === 0
+    ? `whitespace-nowrap transition-colors duration-200 hover:text-brand-1 ${isActive ? "text-brand-1" : ""}`
+    : "flex items-start gap-2.5 rounded-lg p-2 transition-colors duration-200 hover:bg-brand-3/40 max-tablet:w-full max-tablet:max-w-[22rem] max-tablet:items-center";
+---
+
+{
+  isDropdown ? (
+    <div class="nav-item group/nav relative max-tablet:w-full">
+      <button type="button" class={`nav-toggle ${triggerClass}`} aria-expanded="false">
+        {Icon && <Icon class="h-4 w-4 shrink-0 text-brand-1" />}
+        <span>{item.title}</span>
+        <ChevronDown class="h-3.5 w-3.5 shrink-0 transition-transform duration-200 [.is-open_&]:rotate-180" />
+      </button>
+      <div
+        hidden
+        class={
+          depth === 0
+            ? "nav-panel absolute top-full left-1/2 z-20 mt-4 w-[38rem] max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-2xl bg-white p-4 shadow-[0_10px_30px_rgba(0,0,0,0.12)] before:absolute before:-top-[13px] before:left-1/2 before:z-10 before:h-0 before:w-0 before:-translate-x-1/2 before:border-x-[14px] before:border-b-[14px] before:border-x-transparent before:border-b-white before:content-[''] max-tablet:static max-tablet:mt-2 max-tablet:w-full max-tablet:max-w-none max-tablet:translate-x-0 max-tablet:rounded-none max-tablet:bg-transparent max-tablet:p-0 max-tablet:shadow-none max-tablet:before:hidden"
+            : "nav-panel static mt-1 ml-2 rounded-lg bg-brand-3/40 p-2"
+        }
+      >
+        <ul
+          class={
+            depth === 0
+              ? "m-0 grid list-none grid-cols-2 gap-x-2 gap-y-1 p-0 text-xs max-tablet:flex max-tablet:grid-cols-1 max-tablet:flex-col max-tablet:items-center max-tablet:gap-3"
+              : "m-0 flex list-none flex-col gap-1 p-0 text-sm max-tablet:items-center max-tablet:text-[1.35rem]"
+          }
+        >
+          {item.children.map((child) => (
+            <li>
+              <NavMenuItem item={child} depth={1} currentPath={currentPath} />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  ) : (
+    <a href={item.url} class={linkClass} aria-current={isActive ? "page" : undefined}>
+      {depth === 1 && Icon && (
+        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-brand-3/60 text-brand-1">
+          <Icon class="h-4 w-4" />
+        </span>
+      )}
+      <span class={depth === 1 ? "flex flex-col" : undefined}>
+        <span class={depth === 1 ? "font-medium" : undefined}>{item.title}</span>
+        {depth === 1 && description && (
+          <span class="mt-0.5 text-[0.7rem] leading-snug text-text-alt max-tablet:text-center">
+            {description}
+          </span>
+        )}
+      </span>
+    </a>
+  )
+}

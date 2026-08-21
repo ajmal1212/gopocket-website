@@ -1,0 +1,236 @@
+---
+import Button from "./Button.astro";
+import Logo from "../assets/logo.svg";
+import NavMenuItem from "./NavMenuItem.astro";
+import type { Link, NavEntry } from "../types";
+
+interface Props {
+  logoUrl: string;
+  logoAlt: string;
+  navLinks: NavEntry[];
+  link1?: Link;
+  link2?: Link;
+  currentPath?: string;
+}
+
+const { logoUrl, logoAlt, link1, link2, navLinks, currentPath = "" } =
+  Astro.props;
+---
+
+<header>
+  <sy-head
+    class="fixed inset-x-0 top-0 z-10 mx-auto text-text transition-transform duration-300 ease-out-cubic [body.is-nav-hidden_&]:-translate-y-full before:absolute before:inset-0 before:-z-[1] before:content-[''] after:absolute after:inset-0 after:-z-[1] after:origin-top after:scale-y-0 after:bg-brand-3/70 after:backdrop-blur-[15px] after:transition-transform after:duration-300 after:ease-out-cubic after:content-[''] [body.is-nav-small_&]:after:scale-y-100"
+  >
+    <div
+      class="mx-auto w-[calc(100%-3rem)] max-w-[72rem] py-4 transition-[padding] duration-300 ease-out-cubic max-desktop-sm:w-[calc(100%-3rem)] max-tablet:w-[calc(100%-2rem)] max-phone:w-[calc(100%-1.5rem)] [body.is-nav-small_&]:py-2"
+    >
+      <div class="relative flex items-center justify-between max-tablet:flex-wrap">
+        <a class="relative z-[3]" href={logoUrl}>
+          <Logo class="block h-auto w-30 max-phone:w-25" />
+          <span class="sr-only">{logoAlt}</span>
+        </a>
+
+        <div
+          class="absolute inset-x-0 mx-auto w-min max-tablet:fixed max-tablet:inset-0 max-tablet:z-[2] max-tablet:flex max-tablet:h-screen max-tablet:w-screen max-tablet:items-center max-tablet:justify-center max-tablet:overflow-y-auto max-tablet:bg-brand-3 max-tablet:py-24 max-tablet:[clip-path:inset(0_0_0%)] max-tablet:transition-[clip-path] max-tablet:duration-500 max-tablet:ease-out-expo [body:not(.is-nav-opened)_&]:max-tablet:pointer-events-none [body:not(.is-nav-opened)_&]:max-tablet:[clip-path:inset(0_0_100%)] [body.is-nav-small:not(.is-nav-opened)_&]:max-tablet:[clip-path:inset(0_0_calc(100%-3.75rem)_round_0_0_1.5rem_1.5rem)] [body.is-nav-small:not(.is-nav-opened)_&]:max-tablet-sm:[clip-path:inset(0_0_calc(100%-3.75rem)_round_0_0_1rem_1rem)] [body.is-nav-small:not(.is-nav-opened)_&]:max-phone:[clip-path:inset(0_0_calc(100%-3.375rem)_round_0_0_1rem_1rem)]"
+        >
+          <ul
+            class="nav-list m-0 flex list-none items-center gap-[1.3125em] p-0 text-sm max-tablet:w-full max-tablet:flex-col max-tablet:gap-4 max-tablet:px-6 max-tablet:text-[1.35rem] max-tablet:text-brand-1"
+          >
+            {
+              navLinks.map((item) => (
+                <li class="max-tablet:w-full">
+                  <NavMenuItem item={item} currentPath={currentPath} />
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <div class="z-[2] flex items-center gap-[0.8rem] max-tablet:gap-5">
+          {
+            link1 ? (
+              <a
+                href={link1.url}
+                class="relative translate-y-0 text-sm transition-[transform,color] duration-300 ease-out-expo after:pointer-events-none after:absolute after:top-[115%] after:left-0 after:h-[2px] after:w-full after:origin-right after:scale-x-0 after:bg-current after:transition-transform after:duration-300 after:ease-out-expo after:content-[''] hover:after:origin-left hover:after:scale-x-100 focus:after:origin-left focus:after:scale-x-100 max-phone:hidden"
+              >
+                {link1.title}
+              </a>
+            ) : null
+          }
+          {link2 ? <Button {...link2} revealable={false} /> : null}
+
+          <button
+            type="button"
+            class="toggle hidden cursor-pointer items-center self-auto border-0 bg-none p-0 text-brand-1 transition-colors duration-300 ease-out-expo max-tablet:flex [.has-no-bg_&]:text-brand-3 [body.is-nav-opened_&]:text-brand-1 [body.is-nav-small_&]:text-brand-1"
+            aria-label=""
+          >
+            <span class="sr-only">Toggle Mobile Menu</span>
+            <span aria-hidden class="flex h-6 w-9 flex-col justify-between">
+              <span class="flex h-[4px] w-full origin-center rounded-[10px] bg-current [transform:translateZ(0)] transition-transform duration-200 ease-out-cubic [body.is-nav-opened_&]:[transform:translateY(calc(0.75rem-2px))_rotate(45deg)]" />
+              <span class="flex h-[4px] w-full origin-center rounded-[10px] bg-current [transform:translateZ(0)] transition-opacity duration-200 ease-out-cubic [body.is-nav-opened_&]:opacity-0" />
+              <span class="flex h-[4px] w-full origin-center rounded-[10px] bg-current [transform:translateZ(0)] transition-transform duration-200 ease-out-cubic [body.is-nav-opened_&]:[transform:translateY(calc(-0.75rem+2px))_rotate(-45deg)]" />
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </sy-head>
+</header>
+
+<script>
+  import { addScrollObserver } from "../utils/observers";
+
+  const heroSelectors = ["sy-hero-home"];
+
+  class Header extends HTMLElement {
+    smallThreshold = 100;
+    hiddenThreshold = 200;
+    toggleEl = this.querySelector(".toggle")!;
+    hero = document.querySelector(heroSelectors.join(","));
+    prevY = -1;
+
+    constructor() {
+      super();
+
+      addScrollObserver(this);
+
+      this.toggleEl.addEventListener("click", this.toggleNav);
+      this.initDropdowns();
+
+      // addResizeObserver(this);
+
+      this.onResize();
+      this.onScroll(window.scrollY);
+    }
+
+    onScroll(y: number) {
+      const isDown = y > this.prevY ? true : false;
+      this.prevY = y;
+
+      const classList = document.body.classList;
+
+      const shouldBeSmall = y > this.smallThreshold;
+      const isSmall = classList.contains("is-nav-small");
+
+      if (shouldBeSmall !== isSmall) {
+        classList.toggle("is-nav-small", shouldBeSmall);
+      }
+
+      const shouldBeHidden = y > this.hiddenThreshold && isDown;
+      const isHidden = classList.contains("is-nav-hidden");
+
+      if (shouldBeHidden !== isHidden) {
+        classList.toggle("is-nav-hidden", shouldBeHidden);
+      }
+    }
+
+    toggleNav = () => {
+      document.body.classList.toggle("is-nav-opened");
+    };
+
+    onResize() {
+      const hero = this.hero;
+      const bcr = this.getBoundingClientRect();
+      const heroBcr = hero && hero.getBoundingClientRect();
+
+      this.smallThreshold = heroBcr ? heroBcr.height - bcr.height : bcr.height;
+    }
+
+    initDropdowns() {
+      const navItems = Array.from(
+        this.querySelectorAll<HTMLElement>(".nav-item"),
+      );
+
+      const closeItem = (item: HTMLElement) => {
+        const toggle = item.querySelector<HTMLButtonElement>(
+          ":scope > .nav-toggle",
+        )!;
+        const panel = item.querySelector<HTMLElement>(
+          ":scope > .nav-panel",
+        )!;
+
+        item.classList.remove("is-open");
+        toggle.setAttribute("aria-expanded", "false");
+        panel.hidden = true;
+      };
+
+      const openItem = (item: HTMLElement) => {
+        const toggle = item.querySelector<HTMLButtonElement>(
+          ":scope > .nav-toggle",
+        )!;
+        const panel = item.querySelector<HTMLElement>(
+          ":scope > .nav-panel",
+        )!;
+
+        item.classList.add("is-open");
+        toggle.setAttribute("aria-expanded", "true");
+        panel.hidden = false;
+      };
+
+      const closeAll = (except?: HTMLElement) => {
+        navItems.forEach((item) => {
+          if (item !== except) closeItem(item);
+        });
+      };
+
+      const closeSiblings = (item: HTMLElement) => {
+        // Close sibling dropdowns at the same level, but leave ancestors
+        // (for nested items like ReKYC inside Sign In) untouched.
+        const parentItem = item.parentElement?.closest<HTMLElement>(
+          ".nav-item",
+        );
+        const siblingScope = parentItem
+          ? Array.from(
+              parentItem.querySelectorAll<HTMLElement>(":scope .nav-item"),
+            ).filter((n) => n.parentElement?.closest(".nav-item") === parentItem)
+          : navItems.filter((n) => !n.parentElement?.closest(".nav-item"));
+
+        siblingScope.forEach((sibling) => {
+          if (sibling !== item) closeItem(sibling);
+        });
+      };
+
+      let leaveTimer: ReturnType<typeof setTimeout> | undefined;
+
+      navItems.forEach((item) => {
+        const toggle = item.querySelector<HTMLButtonElement>(
+          ":scope > .nav-toggle",
+        );
+        if (!toggle) return;
+
+        toggle.addEventListener("click", (e) => {
+          e.stopPropagation();
+
+          const expanded = item.classList.contains("is-open");
+          closeSiblings(item);
+
+          if (expanded) {
+            closeItem(item);
+          } else {
+            openItem(item);
+          }
+        });
+
+        item.addEventListener("mouseenter", () => {
+          clearTimeout(leaveTimer);
+          closeSiblings(item);
+          openItem(item);
+        });
+
+        item.addEventListener("mouseleave", () => {
+          leaveTimer = setTimeout(() => closeItem(item), 150);
+        });
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!(e.target as HTMLElement).closest(".nav-item")) closeAll();
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeAll();
+      });
+    }
+  }
+
+  customElements.define("sy-head", Header);
+</script>

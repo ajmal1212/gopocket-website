@@ -1,0 +1,49 @@
+---
+import type { Link } from "../types";
+import Button from "./Button.astro";
+import Container from "./Container.astro";
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  cta?: Link;
+}
+
+const { title, subtitle, cta } = Astro.props;
+---
+
+<div class="sy-hero-home relative overflow-hidden">
+  <div
+    class="absolute inset-0 before:absolute before:inset-0 before:h-full before:w-full before:bg-[image:var(--hero-gradient)] before:bg-center before:opacity-30 before:[mask:linear-gradient(0deg,rgba(0,0,0,0)_1%,rgba(0,0,0,1)_100%)] before:content-[''] after:absolute after:inset-0 after:h-full after:w-full after:[backdrop-filter:blur(5px)] after:content-['']"
+  >
+  </div>
+  <Container>
+    <div
+      class="relative z-[1] flex min-h-screen flex-row items-center justify-between pt-[9rem] pb-40 max-tablet:flex-col max-tablet:items-start"
+    >
+      <div>
+        <h1
+          class="whitespace-nowrap text-h1 leading-[1.05] max-phone:whitespace-normal max-phone:text-[2.6rem] max-phone-sm:text-[2rem] [&_.line2]:block [&_.accent]:font-bold [&_.accent]:text-brand-1"
+          data-sy-reveal="words"
+          set:html={title}
+        />
+        {
+          subtitle ? (
+            <p
+              class="mt-6 max-w-[25em] text-lg"
+              data-sy-reveal="lines"
+            >
+              {subtitle}
+            </p>
+          ) : null
+        }
+        {cta ? <Button {...cta} arrow class="mt-8" /> : null}
+      </div>
+      <div
+        data-gl-place
+        class="pointer-events-none mt-[-2rem] h-[var(--s)] w-[var(--s)] [--s:24rem] max-desktop-lg:[--s:22rem] max-tablet:absolute max-tablet:top-full max-tablet:right-0 max-tablet:left-0 max-tablet:mx-auto max-tablet:my-0 max-tablet:w-80 max-tablet:-translate-y-[60%] max-tablet-sm:[--s:20rem]"
+      >
+      </div>
+    </div>
+  </Container>
+</div>

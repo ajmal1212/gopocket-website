@@ -1,0 +1,201 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Section from "../components/Section.astro";
+import Container from "../components/Container.astro";
+import Button from "../components/Button.astro";
+import {
+  ChartCandlestick,
+  Wheat,
+  Rocket,
+  ChartPie,
+  Anchor,
+  GitFork,
+  CircleCheck,
+  CircleX,
+} from "@lucide/astro";
+
+const categories = [
+  {
+    icon: ChartCandlestick,
+    title: "Equity",
+    tagline: "Own a piece of the companies you believe in.",
+    text: "Think of it like Shark Tank — when you buy equity, you're buying a small share of a real business and its future profits. GoPocket gives you access to every NSE and BSE listed share, with the liquidity to buy or sell whenever conviction strikes.",
+    features: [
+      "Access via Web, App and API — trade wherever you are",
+      "Live charts, stock screeners and brokerage calculators built in",
+      "Trending Stocks, Top Gainers, Top Losers and Top 50 at a glance",
+    ],
+  },
+  {
+    icon: Wheat,
+    title: "Commodities",
+    tagline: "Trade the raw materials that move the real economy.",
+    text: "From the soya in your kitchen to the gold in a vault, commodities are the building blocks of everything else. Trading them diversifies your portfolio and hedges against inflation and event risk.",
+    features: [
+      "Agricultural — Soya, Chana, Wheat",
+      "Metals — Aluminium, Copper, Gold, Silver",
+      "Energy — Natural Gas, Crude Oil, Coal",
+    ],
+  },
+  {
+    icon: Rocket,
+    title: "IPOs",
+    tagline: "Get in when a company opens its doors to the public.",
+    text: "An IPO is a company's next stage of growth — the moment it invites everyday investors to own a piece of what it's building. Apply in a few taps and track your allotment in real time.",
+    features: [
+      "Real-time application status tracking",
+      "Live NSE and BSE platform updates",
+      "Data-driven analytics to guide your decision",
+    ],
+  },
+  {
+    icon: ChartPie,
+    title: "Mutual Funds",
+    tagline: "Pool your money, professionally managed.",
+    text: "Like a potluck party — everyone brings a little, and together it adds up to a spread no single dish could match. A fund manager blends contributions from thousands of investors into a diversified portfolio built for your goals.",
+    features: [
+      "40,000+ schemes with zero custody fees",
+      "Robo-advisory picks funds that match your goals",
+      "Search by Large Cap, Mid Cap or Small Cap",
+    ],
+  },
+  {
+    icon: Anchor,
+    title: "Futures",
+    tagline: "Lock in a price today for a trade tomorrow.",
+    text: "Picture a farmer agreeing today on the price they'll sell wheat for at harvest — locking in certainty either way. Futures let you do the same with financial markets, hedging or speculating on where prices are headed.",
+    features: [
+      "Contracts integrated directly into the trading platform",
+      "Detailed bid/ask price ladder",
+      "Swift, single-tap order entry",
+    ],
+  },
+  {
+    icon: GitFork,
+    title: "Options",
+    tagline: "Strategic moves, not just single trades.",
+    text: "Options trading is chess, not checkers — every Call and Put is a calculated position against a strike price, not a single bet. Build multi-leg strategies with the tools to back them.",
+    features: [
+      "Advanced option chain",
+      "Pre-built Call and Put strategies",
+      "Analytics and expert guidance built in",
+    ],
+  },
+];
+
+const dos = [
+  "Keep your device and trading app password-protected",
+  "Update your passwords regularly",
+  "Review your account statements often",
+  "Contact support immediately if something looks off",
+];
+
+const donts = [
+  "Never share your account details over phone or SMS",
+  "Never share OTPs or other sensitive information with anyone",
+  "Report suspicious calls, messages or emails right away",
+];
+---
+
+<Layout
+  title="Investments"
+  description="Invest in multiple asset classes with GoPocket — Equity, Commodities, IPOs, Mutual Funds, Futures and Options, all on one secure platform."
+>
+  <Section class="pt-40">
+    <Container class="text-center">
+      <h1 class="mx-auto max-w-[18em]" data-sy-reveal="words">
+        Invest in multiple assets with GoPocket
+      </h1>
+      <p
+        class="mx-auto mt-6 max-w-[40em] text-lg text-text-alt"
+        data-sy-reveal="lines"
+      >
+        A huge share of India's wealth still sits in unproductive assets. GoPocket exists to help you put yours to work — across every asset class, on one platform.
+      </p>
+      <Button title="Open Free Account" url="/#pricing" arrow class="mt-8" />
+    </Container>
+  </Section>
+
+  <Section class="gap-0 py-0">
+    {
+      categories.map((c, i) => (
+        <div class:list={["py-16", i % 2 === 1 && "bg-brand-3/30"]}>
+          <Container>
+            <div class="grid grid-cols-1 items-center gap-10 md:grid-cols-[auto_1fr]">
+              <div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-brand-1 text-white">
+                <c.icon class="h-8 w-8" />
+              </div>
+              <div>
+                <h2>{c.title}</h2>
+                <p class="mt-1 text-lg text-brand-1">{c.tagline}</p>
+                <p class="mt-4 max-w-[48em] text-text-alt">{c.text}</p>
+                <ul class="mt-4 flex flex-col gap-2 text-sm text-text-alt">
+                  {c.features.map((f) => (
+                    <li class="flex items-start gap-2">
+                      <CircleCheck class="mt-0.5 h-4 w-4 shrink-0 text-brand-5" />
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </Container>
+        </div>
+      ))
+    }
+  </Section>
+
+  <Section>
+    <Container>
+      <div class="rounded-2xl bg-brand-3/30 p-8 md:p-12">
+        <h2 class="text-center" data-sy-reveal="words">Safety and security</h2>
+        <p
+          class="mx-auto mt-4 max-w-[36em] text-center text-text-alt"
+          data-sy-reveal="lines"
+        >
+          Protecting your account and your wealth comes first. We keep pricing, account opening and support transparent — here's how you can help keep your side secure too.
+        </p>
+        <div class="mt-10 grid grid-cols-1 gap-10 md:grid-cols-2">
+          <div>
+            <h3 class="flex items-center gap-2 text-brand-5">
+              <CircleCheck class="h-5 w-5" /> Do
+            </h3>
+            <ul class="mt-4 flex flex-col gap-3 text-text-alt">
+              {dos.map((d) => (
+                <li class="flex items-start gap-2">
+                  <CircleCheck class="mt-0.5 h-4 w-4 shrink-0 text-brand-5" />
+                  <span>{d}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3 class="flex items-center gap-2 text-brand-2">
+              <CircleX class="h-5 w-5" /> Don't
+            </h3>
+            <ul class="mt-4 flex flex-col gap-3 text-text-alt">
+              {donts.map((d) => (
+                <li class="flex items-start gap-2">
+                  <CircleX class="mt-0.5 h-4 w-4 shrink-0 text-brand-2" />
+                  <span>{d}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section class="pt-0 pb-40 text-center">
+    <Container>
+      <h2 class="mx-auto max-w-[18em]" data-sy-reveal="words">
+        Open your GoPocket account within 5 minutes
+      </h2>
+      <p class="mx-auto mt-4 max-w-[32em] text-text-alt" data-sy-reveal="lines">
+        No paperwork, no branch visits — just your PAN, Aadhaar and a bank account.
+      </p>
+      <Button title="Open Free Account" url="/#pricing" arrow class="mt-8" />
+    </Container>
+  </Section>
+</Layout>
