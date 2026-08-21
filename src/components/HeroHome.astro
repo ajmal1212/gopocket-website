@@ -19,29 +19,45 @@ const { title, subtitle, cta } = Astro.props;
   </div>
   <Container>
     <div
-      class="relative z-[1] flex min-h-screen flex-row items-center justify-between pt-[9rem] pb-40 max-tablet:flex-col max-tablet:items-start max-tablet:pt-[7rem] max-tablet:pb-52 max-phone:pt-[6rem]"
+      class="relative z-[1] flex min-h-[90vh] flex-row items-center justify-between pt-[8.5rem] pb-32 max-tablet:flex-col max-tablet:justify-center max-tablet:items-center max-tablet:text-center max-tablet:min-h-0 max-tablet:pt-[6.5rem] max-tablet:pb-20 max-phone:pt-[5.5rem] max-phone:pb-16"
     >
-      <div class="max-tablet:w-full">
+      <div class="max-tablet:flex max-tablet:flex-col max-tablet:items-center max-tablet:w-full max-tablet:max-w-xl">
+        <div class="mb-4 hidden max-tablet:inline-flex items-center gap-2 rounded-full bg-brand-3/80 px-3.5 py-1 text-xs font-semibold text-brand-1 shadow-sm backdrop-blur-md">
+          <span class="inline-block h-2 w-2 rounded-full bg-brand-2 animate-pulse"></span>
+          Next-Gen Trading Platform
+        </div>
+
         <h1
-          class="whitespace-nowrap text-h1 leading-[1.05] max-phone:whitespace-normal max-phone:text-[2.3rem] max-phone-xs:text-[1.9rem] [&_.line2]:block [&_.accent]:font-bold [&_.accent]:text-brand-1"
+          class="whitespace-nowrap text-h1 leading-[1.08] max-tablet:whitespace-normal max-tablet:text-[2.8rem] max-phone:text-[2.2rem] max-phone-xs:text-[1.85rem] [&_.line2]:block [&_.accent]:font-bold [&_.accent]:text-brand-1"
           data-sy-reveal="words"
           set:html={title}
         />
         {
           subtitle ? (
             <p
-              class="mt-6 max-w-[25em] text-lg max-phone:text-base max-phone:mt-4"
+              class="mt-6 max-w-[25em] text-lg max-tablet:mt-4 max-tablet:text-base max-tablet:max-w-[22em] max-tablet:mx-auto text-text-alt"
               data-sy-reveal="lines"
             >
               {subtitle}
             </p>
           ) : null
         }
-        {cta ? <div class="mt-8 max-phone:w-full"><Button {...cta} arrow class="max-phone:w-full max-phone:justify-center max-phone:min-h-[48px]" /></div> : null}
+        {
+          cta ? (
+            <div class="mt-8 max-tablet:mt-6 max-phone:w-full max-phone:max-w-xs">
+              <Button
+                {...cta}
+                arrow
+                class="max-phone:w-full max-phone:justify-center max-phone:min-h-[48px] max-phone:text-sm"
+              />
+            </div>
+          ) : null
+        }
       </div>
+
       <div
         data-gl-place
-        class="pointer-events-none mt-[-2rem] h-[var(--s)] w-[var(--s)] [--s:24rem] max-desktop-lg:[--s:22rem] max-tablet:absolute max-tablet:top-full max-tablet:right-0 max-tablet:left-0 max-tablet:mx-auto max-tablet:my-0 max-tablet:w-80 max-tablet:-translate-y-[55%] max-tablet-sm:[--s:18rem] max-phone:[--s:15rem]"
+        class="pointer-events-none mt-[-2rem] h-[var(--s)] w-[var(--s)] [--s:24rem] max-desktop-lg:[--s:22rem] max-tablet:relative max-tablet:mt-6 max-tablet:mb-0 max-tablet:top-0 max-tablet:inset-x-0 max-tablet:mx-auto max-tablet:translate-y-0 [--s:16rem] max-phone:[--s:13rem]"
       >
       </div>
     </div>
