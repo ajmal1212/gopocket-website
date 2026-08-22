@@ -13,6 +13,7 @@ import {
   CircleCheck,
   CircleX,
 } from "@lucide/astro";
+import { breadcrumbSchema, itemListSchema } from "../utils/seo";
 
 const categories = [
   {
@@ -95,11 +96,22 @@ const donts = [
   "Never share OTPs or other sensitive information with anyone",
   "Report suspicious calls, messages or emails right away",
 ];
+
+const schema = [
+  breadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "Investments", url: "/investments" },
+  ]),
+  itemListSchema(
+    categories.map((c) => ({ name: c.title, description: c.tagline })),
+  ),
+];
 ---
 
 <Layout
   title="Investments"
   description="Invest in multiple asset classes with GoPocket — Equity, Commodities, IPOs, Mutual Funds, Futures and Options, all on one secure platform."
+  schema={schema}
 >
   <Section class="pt-40">
     <Container class="text-center">

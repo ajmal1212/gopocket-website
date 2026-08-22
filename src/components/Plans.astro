@@ -18,7 +18,7 @@ interface Item {
 interface Props {
   title: string;
   subtitle: string;
-  items: [Item, Item];
+  items: Item[];
 }
 
 const { title, subtitle, items } = Astro.props;

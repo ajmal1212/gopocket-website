@@ -30,7 +30,8 @@ const { logoUrl, logoAlt, link1, link2, navLinks, currentPath = "" } =
           <span class="sr-only">{logoAlt}</span>
         </a>
 
-        <div
+        <nav
+          aria-label="Primary"
           class="absolute inset-x-0 mx-auto w-min max-tablet:fixed max-tablet:inset-0 max-tablet:z-[2] max-tablet:flex max-tablet:h-screen max-tablet:w-screen max-tablet:items-center max-tablet:justify-center max-tablet:overflow-y-auto max-tablet:bg-brand-3/95 max-tablet:backdrop-blur-xl max-tablet:pt-[max(5rem,env(safe-area-inset-top))] max-tablet:pb-[max(3rem,env(safe-area-inset-bottom))] max-tablet:px-6 max-tablet:[clip-path:inset(0_0_0%)] max-tablet:transition-[clip-path] max-tablet:duration-500 max-tablet:ease-out-expo [body:not(.is-nav-opened)_&]:max-tablet:pointer-events-none [body:not(.is-nav-opened)_&]:max-tablet:[clip-path:inset(0_0_100%)] [body.is-nav-small:not(.is-nav-opened)_&]:max-tablet:[clip-path:inset(0_0_calc(100%-3.75rem)_round_0_0_1.5rem_1.5rem)] [body.is-nav-small:not(.is-nav-opened)_&]:max-tablet-sm:[clip-path:inset(0_0_calc(100%-3.75rem)_round_0_0_1rem_1rem)] [body.is-nav-small:not(.is-nav-opened)_&]:max-phone:[clip-path:inset(0_0_calc(100%-3.375rem)_round_0_0_1rem_1rem)]"
         >
           <ul
@@ -44,7 +45,7 @@ const { logoUrl, logoAlt, link1, link2, navLinks, currentPath = "" } =
               ))
             }
           </ul>
-        </div>
+        </nav>
 
         <div class="z-[2] flex items-center gap-[0.8rem] max-tablet:gap-3">
           {

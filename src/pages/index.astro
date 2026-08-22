@@ -19,9 +19,93 @@ import badgeCdsl from "../assets/badges/cdsl.svg";
 import badgeNsdl from "../assets/badges/nsdl.svg";
 import badgeNcdex from "../assets/badges/ncdex.svg";
 import badgeAmfi from "../assets/badges/amfi.svg";
+import { faqPageSchema } from "../utils/seo";
+
+const plans = [
+  {
+    title: "Standard",
+    price: {
+      amount: "₹20",
+      duration: "order",
+    },
+    link: {
+      title: "Open Free Account",
+      url: "#",
+    },
+    features: [
+      { title: "Flat ₹20 or 0.03% per order — whichever is lower" },
+      { title: "Zero custody fees on Mutual Funds" },
+      { title: "Priority chat support", disabled: true },
+      { title: "Dedicated relationship manager", disabled: true },
+      { title: "Custom research & advisory", disabled: true },
+    ],
+  },
+  {
+    title: "Prime",
+    price: {
+      amount: "Custom",
+      duration: "trading volume",
+    },
+    link: {
+      title: "Talk to an Expert",
+      url: "#",
+    },
+    features: [
+      { title: "Everything in Standard" },
+      { title: "Zero custody fees on Mutual Funds" },
+      { title: "Priority chat & call support" },
+      { title: "Dedicated relationship manager" },
+      { title: "Custom research & advisory" },
+    ],
+  },
+];
+
+const faqItems = [
+  {
+    question: "Who can open a GoPocket account?",
+    answer:
+      "Any Indian resident with a PAN card and a bank account can open a GoPocket account online in about 5 minutes — no paperwork or branch visits required.",
+  },
+  {
+    question: "What does GoPocket cost to trade?",
+    answer:
+      "Just a flat ₹20 or 0.03% per order, whichever is lower, across equity, F&O, currencies and commodities — with zero custody fees on mutual funds.",
+  },
+  {
+    question: "Is my money and data safe with GoPocket?",
+    answer:
+      "Yes. GoPocket is registered with SEBI and follows bank-grade security practices, so your funds, holdings and personal data stay protected.",
+  },
+  {
+    question: "Can I invest in mutual funds and IPOs too?",
+    answer:
+      "Absolutely. Explore 40,000+ mutual funds with robo-advisory guidance, and apply for IPOs directly from the app in a few taps.",
+  },
+  {
+    question: "What if I need help along the way?",
+    answer:
+      "Our support team is available around the clock via chat, and Prime users get a dedicated relationship manager for personalised guidance.",
+  },
+];
+
+const offerCatalogSchema = {
+  "@context": "https://schema.org",
+  "@type": "OfferCatalog",
+  name: "GoPocket Pricing & Plans",
+  itemListElement: plans.map((plan) => ({
+    "@type": "Offer",
+    name: plan.title,
+    description: plan.features.map((f) => f.title).join("; "),
+    ...(plan.price.amount.startsWith("₹")
+      ? { price: plan.price.amount.replace("₹", ""), priceCurrency: "INR" }
+      : {}),
+  })),
+};
+
+const schema = [offerCatalogSchema, faqPageSchema(faqItems)];
 ---
 
-<Layout title="Home">
+<Layout title="Home" schema={schema}>
   <HeroHome
     title="One Platform<span class='line2'>more <span class='accent'>Possibilities</span></span>"
     subtitle="At GoPocket, Finance and Technology Join Hands to Make Your Online Trading awesome."
@@ -120,44 +204,7 @@ import badgeAmfi from "../assets/badges/amfi.svg";
     <Plans
       title="Pricing & Plans"
       subtitle="Transparent, flat-fee pricing with no hidden charges. Pay only for what you trade."
-      items={[
-        {
-          title: "Standard",
-          price: {
-            amount: "₹20",
-            duration: "order",
-          },
-          link: {
-            title: "Open Free Account",
-            url: "#",
-          },
-          features: [
-            { title: "Flat ₹20 or 0.03% per order — whichever is lower" },
-            { title: "Zero custody fees on Mutual Funds" },
-            { title: "Priority chat support", disabled: true },
-            { title: "Dedicated relationship manager", disabled: true },
-            { title: "Custom research & advisory", disabled: true },
-          ],
-        },
-        {
-          title: "Prime",
-          price: {
-            amount: "Custom",
-            duration: "trading volume",
-          },
-          link: {
-            title: "Talk to an Expert",
-            url: "#",
-          },
-          features: [
-            { title: "Everything in Standard" },
-            { title: "Zero custody fees on Mutual Funds" },
-            { title: "Priority chat & call support" },
-            { title: "Dedicated relationship manager" },
-            { title: "Custom research & advisory" },
-          ],
-        },
-      ]}
+      items={plans}
     />
   </div>
 
@@ -166,33 +213,7 @@ import badgeAmfi from "../assets/badges/amfi.svg";
       title="Frequently Asked Questions"
       mobileTitle="FAQs"
       subtitle="Quick answers about investing and trading with GoPocket."
-      items={[
-        {
-          question: "Who can open a GoPocket account?",
-          answer:
-            "Any Indian resident with a PAN card and a bank account can open a GoPocket account online in about 5 minutes — no paperwork or branch visits required.",
-        },
-        {
-          question: "What does GoPocket cost to trade?",
-          answer:
-            "Just a flat ₹20 or 0.03% per order, whichever is lower, across equity, F&O, currencies and commodities — with zero custody fees on mutual funds.",
-        },
-        {
-          question: "Is my money and data safe with GoPocket?",
-          answer:
-            "Yes. GoPocket is registered with SEBI and follows bank-grade security practices, so your funds, holdings and personal data stay protected.",
-        },
-        {
-          question: "Can I invest in mutual funds and IPOs too?",
-          answer:
-            "Absolutely. Explore 40,000+ mutual funds with robo-advisory guidance, and apply for IPOs directly from the app in a few taps.",
-        },
-        {
-          question: "What if I need help along the way?",
-          answer:
-            "Our support team is available around the clock via chat, and Prime users get a dedicated relationship manager for personalised guidance.",
-        },
-      ]}
+      items={faqItems}
     />
     <p class="text-center">
       <a

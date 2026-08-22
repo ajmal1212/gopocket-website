@@ -3,6 +3,12 @@ import Layout from "../layouts/Layout.astro";
 import Section from "../components/Section.astro";
 import Container from "../components/Container.astro";
 import ImageMarquee from "../components/ImageMarquee.astro";
+import { breadcrumbSchema } from "../utils/seo";
+
+const schema = breadcrumbSchema([
+  { name: "Home", url: "/" },
+  { name: "About", url: "/about" },
+]);
 
 import badgeSebi from "../assets/badges/sebi.svg";
 import badgeNse from "../assets/badges/nse.svg";
@@ -24,6 +30,7 @@ const stats = [
 <Layout
   title="About"
   description="GoPocket exists to make investing and trading simple, affordable and accessible for every Indian — learn about our mission and technology."
+  schema={schema}
 >
   <Section class="pt-40">
     <Container class="text-center">

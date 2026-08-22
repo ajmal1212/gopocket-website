@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import Section from "../components/Section.astro";
 import Container from "../components/Container.astro";
 import Button from "../components/Button.astro";
+import { breadcrumbSchema, itemListSchema } from "../utils/seo";
 
 const products = [
   {
@@ -30,11 +31,22 @@ const products = [
     text: "Access commodity markets with competitive leverage and dedicated research to inform every position.",
   },
 ];
+
+const schema = [
+  breadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "Products", url: "/products" },
+  ]),
+  itemListSchema(
+    products.map((p) => ({ name: p.title, description: p.text })),
+  ),
+];
 ---
 
 <Layout
   title="Products"
   description="Explore GoPocket's full range of investment products — Equity, Mutual Funds, IPOs, Futures & Options, Currencies and Commodities, all on one platform."
+  schema={schema}
 >
   <Section class="pt-40">
     <Container class="text-center">
