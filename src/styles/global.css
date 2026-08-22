@@ -78,6 +78,7 @@
 
   /* keyframe-driven utilities */
   --animate-plan-border: plan-border 5s linear infinite;
+  --animate-marquee-x: marquee-x 46s linear infinite;
 }
 
 @keyframes plan-border {
@@ -86,6 +87,12 @@
   }
   to {
     transform: rotate(365deg);
+  }
+}
+
+@keyframes marquee-x {
+  to {
+    transform: translateX(-50%);
   }
 }
 

@@ -31,8 +31,9 @@ const testimonials = organizationSchema.review
     quote: r.reviewBody!,
   }));
 
-const rowA = testimonials.filter((_, i) => i % 2 === 0);
-const rowB = testimonials.filter((_, i) => i % 2 === 1);
+const mid = Math.ceil(testimonials.length / 2);
+const rowA = testimonials.slice(0, mid);
+const rowB = testimonials.slice(mid);
 ---
 
 <div class="sy-testimonials relative overflow-hidden py-4">
@@ -48,151 +49,31 @@ const rowB = testimonials.filter((_, i) => i % 2 === 1);
     </p>
   </Container>
 
-  <div class="mt-14 flex flex-col gap-6">
-    <sy-card-marquee
-      data-dir="1"
-      class="relative block w-screen max-w-full overflow-hidden opacity-0 transition-opacity duration-200 ease-in-out [mask-image:linear-gradient(90deg,transparent,black_8%,black_92%,transparent)] [&.is-ready]:opacity-100"
-    >
-      <div class="inner grid gap-6 max-tablet-sm:gap-4">
-        {
-          rowA.map((t) => (
-            <div class="item h-full w-[21rem] [grid-column:1] [grid-row:1] will-change-transform max-tablet-sm:w-[17rem]">
-              <TestimonialCard {...t} />
-            </div>
-          ))
-        }
-      </div>
-    </sy-card-marquee>
+  <div class="mt-14 flex flex-col gap-6 [mask-image:linear-gradient(90deg,transparent,black_8%,black_92%,transparent)]">
+    <div class="flex w-max animate-marquee-x gap-6 hover:[animation-play-state:paused] max-tablet-sm:gap-4 motion-reduce:animate-none">
+      {
+        [...rowA, ...rowA].map((t, i) => (
+          <div
+            class="w-[21rem] shrink-0 max-tablet-sm:w-[17rem]"
+            aria-hidden={i >= rowA.length ? "true" : undefined}
+          >
+            <TestimonialCard {...t} />
+          </div>
+        ))
+      }
+    </div>
 
-    <sy-card-marquee
-      data-dir="-1"
-      class="relative block w-screen max-w-full overflow-hidden opacity-0 transition-opacity duration-200 ease-in-out [mask-image:linear-gradient(90deg,transparent,black_8%,black_92%,transparent)] [&.is-ready]:opacity-100"
-    >
-      <div class="inner grid gap-6 max-tablet-sm:gap-4">
-        {
-          rowB.map((t) => (
-            <div class="item h-full w-[21rem] [grid-column:1] [grid-row:1] will-change-transform max-tablet-sm:w-[17rem]">
-              <TestimonialCard {...t} />
-            </div>
-          ))
-        }
-      </div>
-    </sy-card-marquee>
+    <div class="flex w-max animate-marquee-x gap-6 [animation-direction:reverse] [animation-duration:52s] hover:[animation-play-state:paused] max-tablet-sm:gap-4 motion-reduce:animate-none">
+      {
+        [...rowB, ...rowB].map((t, i) => (
+          <div
+            class="w-[21rem] shrink-0 max-tablet-sm:w-[17rem]"
+            aria-hidden={i >= rowB.length ? "true" : undefined}
+          >
+            <TestimonialCard {...t} />
+          </div>
+        ))
+      }
+    </div>
   </div>
 </div>
-
-<script>
-  import { addResizeObserver } from "../utils/observers";
-  import { addIntersectingTicker } from "../utils/globalTicker";
-
-  import { gsap } from "gsap";
-
-  class CardMarquee extends HTMLElement {
-    x = 0;
-    width = -1;
-    direction = 1;
-    paused = false;
-    ghosts: HTMLElement[] = [];
-    items: HTMLElement[] = [];
-    wrap!: (n: number) => number;
-
-    constructor() {
-      super();
-
-      this.items = Array.from(this.querySelectorAll(".item")) as HTMLElement[];
-      this.direction = Number(this.dataset.dir) || 1;
-
-      addResizeObserver(this);
-      addIntersectingTicker(this);
-
-      this.addEventListener("pointerenter", () => (this.paused = true));
-      this.addEventListener("pointerleave", () => (this.paused = false));
-    }
-
-    connectedCallback() {
-      this.reCalc();
-
-      this.classList.add("is-ready");
-    }
-
-    onWidthResize() {
-      this.reCalc();
-    }
-
-    reCalc() {
-      const { items } = this;
-
-      const inner = this.querySelector(".inner")!;
-
-      const fbcr = items[0].getBoundingClientRect();
-      const gap = parseInt(window.getComputedStyle(inner).columnGap, 10);
-
-      const width = Math.floor(fbcr.width + gap);
-
-      this.width = width;
-
-      this.fillScreen();
-
-      this.wrap = gsap.utils.wrap(-width, width * (this.items.length - 1));
-
-      this.x = Math.round(1000 * -this.direction * Math.random());
-    }
-
-    fillScreen() {
-      const items = this.items;
-      const width = this.width;
-      const innerWidth = window.innerWidth * 2;
-      const inner = this.querySelector(".inner")!;
-
-      this.ghosts.forEach((g) => {
-        const index = items.indexOf(g);
-        items.splice(index, 1);
-
-        g.remove();
-      });
-
-      this.ghosts = [];
-      const ghosts = this.ghosts;
-
-      const fillCount = Math.floor(innerWidth / width);
-
-      if (items.length < fillCount) {
-        for (let i = 0; i < fillCount - items.length; i++) {
-          const clone = items[i % items.length].cloneNode(true) as HTMLElement;
-
-          clone.ariaHidden = "true";
-          ghosts.push(clone);
-          items.push(clone);
-        }
-
-        inner.append(...ghosts);
-      }
-
-      this.items = items;
-    }
-
-    tick() {
-      if (this.paused) return;
-
-      const dir = this.direction;
-
-      this.x -=
-        (Math.min(Math.abs(window.scrollVelocity) * 0.4, 10) + 0.5) *
-        (window.scrollDirection || 1) *
-        dir;
-
-      const items = this.items;
-      const width = this.width;
-      const x = this.x;
-      const wrap = this.wrap;
-
-      items.forEach((item, i) => {
-        const xx = wrap(x + width * i);
-
-        item.style.transform = `translateX(${xx}px)`;
-      });
-    }
-  }
-
-  customElements.define("sy-card-marquee", CardMarquee);
-</script>
