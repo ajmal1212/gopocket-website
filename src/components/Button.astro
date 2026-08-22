@@ -2,8 +2,9 @@
 type CommonProps = {
   class?: string;
   color?: "primary" | "primary-alt";
-  size?: "sm" | "md";
+  size?: "sm" | "md" | "lg";
   arrow?: boolean;
+  fullWidth?: boolean;
   title: string;
   revealable?: boolean;
   manualReveal?: boolean;
@@ -30,7 +31,9 @@ const {
   class: className = "",
   type = "button",
   color = "primary",
+  size = "md",
   arrow = false,
+  fullWidth = false,
   revealable = true,
   manualReveal = false,
 } = Astro.props;
@@ -53,6 +56,13 @@ const textClass = isAlt ? "text-text" : "text-white";
 const ringClass = isAlt ? "after:border-brand-3" : "after:border-brand-1";
 const arrowBgClass = isAlt ? "after:bg-brand-3" : "after:bg-brand-1";
 
+const sizeClasses =
+  size === "sm"
+    ? "min-h-[38px] text-[0.75rem] px-4 py-2"
+    : size === "lg"
+    ? "min-h-[50px] text-sm px-6 py-4"
+    : "min-h-[44px] text-xs px-[1.5em] py-[0.9375em]";
+
 const frontClip = arrow
   ? "[clip-path:inset(0.95em_1em_0.95em_calc(100%-3em)_round_99px)]"
   : "[clip-path:inset(50%_round_99px)]";
@@ -66,7 +76,8 @@ const arrowClasses =
 
 <Element
   class:list={[
-    "group relative m-0 inline-flex items-center justify-center cursor-pointer overflow-hidden rounded-full border-0 bg-transparent p-0 text-xs font-semibold tracking-[0.02em] min-h-[44px] touch-action-manipulation active:scale-[0.97] transition-transform duration-150 ease-out-cubic",
+    "group relative m-0 inline-flex items-center justify-center cursor-pointer overflow-hidden rounded-full border-0 bg-transparent p-0 font-semibold tracking-[0.02em] touch-action-manipulation active:scale-[0.97] transition-transform duration-150 ease-out-cubic",
+    fullWidth && "w-full",
     revealable &&
       "[clip-path:inset(0_100%_0_0_round_100px)] translate-x-8 origin-left transition-[opacity,clip-path,transform] duration-[0.4s] ease-out-cubic [&.is-in]:[clip-path:inset(0_0_round_100px)] [&.is-in]:translate-x-0",
     className.toString(),
@@ -77,13 +88,14 @@ const arrowClasses =
 >
   <span
     class:list={[
-      "relative block after:pointer-events-none after:absolute after:inset-0 after:z-[2] after:rounded-[99px] after:border-2 after:content-['']",
+      "relative flex w-full h-full items-center justify-center after:pointer-events-none after:absolute after:inset-0 after:z-[2] after:rounded-[99px] after:border-2 after:content-['']",
       ringClass,
     ]}
   >
     <span
       class:list={[
-        "absolute inset-0 z-[2] flex items-center bg-white px-[1.5em] py-[0.9375em] leading-[1.25] text-brand-1 transition-[clip-path] duration-[0.25s] ease-out-cubic",
+        "absolute inset-0 z-[2] flex w-full h-full items-center justify-center bg-white leading-[1.25] text-brand-1 transition-[clip-path] duration-[0.25s] ease-out-cubic",
+        sizeClasses,
         frontClip,
         frontHoverClip,
         arrow && [arrowClasses, "after:bg-brand-1"],
@@ -94,7 +106,8 @@ const arrowClasses =
     <span
       aria-hidden
       class:list={[
-        "flex items-center px-[1.5em] py-[0.9375em] leading-[1.25]",
+        "flex w-full h-full items-center justify-center leading-[1.25]",
+        sizeClasses,
         bgClass,
         textClass,
         arrow && [arrowClasses, arrowBgClass],
