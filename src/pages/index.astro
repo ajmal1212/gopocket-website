@@ -7,6 +7,7 @@ import ImageMarquee from "../components/ImageMarquee.astro";
 import Faqs from "../components/Faqs.astro";
 import StepsTimeline from "../components/StepsTimeline.astro";
 import Plans from "../components/Plans.astro";
+import Testimonials from "../components/Testimonials.astro";
 import Statements from "../components/Statements.astro";
 import Introducing from "../components/Introducing.astro";
 import GL from "../components/GL.astro";
@@ -207,6 +208,8 @@ const schema = [offerCatalogSchema, faqPageSchema(faqItems)];
       items={plans}
     />
   </div>
+
+  <Testimonials />
 
   <div id="faqs">
     <Faqs
