@@ -3,7 +3,6 @@ import Layout from "../layouts/Layout.astro";
 import HeroHome from "../components/HeroHome.astro";
 import TextMarquee from "../components/TextMarquee.astro";
 import GalleryText from "../components/GalleryText.astro";
-import ImageMarquee from "../components/ImageMarquee.astro";
 import Faqs from "../components/Faqs.astro";
 import StepsTimeline from "../components/StepsTimeline.astro";
 import Plans from "../components/Plans.astro";
@@ -11,15 +10,6 @@ import Testimonials from "../components/Testimonials.astro";
 import Statements from "../components/Statements.astro";
 import Introducing from "../components/Introducing.astro";
 import GL from "../components/GL.astro";
-
-import badgeSebi from "../assets/badges/sebi.svg";
-import badgeNse from "../assets/badges/nse.svg";
-import badgeBse from "../assets/badges/bse.svg";
-import badgeMcx from "../assets/badges/mcx.svg";
-import badgeCdsl from "../assets/badges/cdsl.svg";
-import badgeNsdl from "../assets/badges/nsdl.svg";
-import badgeNcdex from "../assets/badges/ncdex.svg";
-import badgeAmfi from "../assets/badges/amfi.svg";
 import { faqPageSchema } from "../utils/seo";
 
 const plans = [
@@ -218,52 +208,7 @@ const schema = [offerCatalogSchema, faqPageSchema(faqItems)];
       subtitle="Quick answers about investing and trading with GoPocket."
       items={faqItems}
     />
-    <p class="text-center">
-      <a
-        href="/faqs"
-        class="relative text-sm text-brand-1 before:pointer-events-none before:absolute before:top-[115%] before:left-0 before:h-[2px] before:w-full before:origin-right before:scale-x-0 before:bg-current before:transition-transform before:duration-300 before:ease-out-expo before:content-[''] hover:before:origin-left hover:before:scale-x-100 focus:before:origin-left focus:before:scale-x-100"
-      >
-        See all FAQs →
-      </a>
-    </p>
   </div>
-
-  <ImageMarquee
-    images={[
-      {
-        src: badgeSebi.src,
-        alt: "Registered with SEBI",
-      },
-      {
-        src: badgeNse.src,
-        alt: "NSE",
-      },
-      {
-        src: badgeBse.src,
-        alt: "BSE",
-      },
-      {
-        src: badgeMcx.src,
-        alt: "MCX",
-      },
-      {
-        src: badgeCdsl.src,
-        alt: "CDSL",
-      },
-      {
-        src: badgeNsdl.src,
-        alt: "NSDL",
-      },
-      {
-        src: badgeNcdex.src,
-        alt: "NCDEX",
-      },
-      {
-        src: badgeAmfi.src,
-        alt: "AMFI",
-      },
-    ]}
-  />
 
   <GL />
 </Layout>
