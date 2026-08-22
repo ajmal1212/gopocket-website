@@ -103,16 +103,24 @@ const importantInfo = [
 ];
 ---
 
-<footer class="bg-[#1f2023] text-white/80 pb-[max(2rem,env(safe-area-inset-bottom))]">
+<footer
+  class="bg-[#1f2023] text-white/80 pb-[max(2rem,env(safe-area-inset-bottom))]"
+>
   <Container class="py-16 max-phone:py-10">
-    <div class="grid grid-cols-1 gap-10 max-tablet:gap-8 max-phone:grid-cols-2 max-phone-xs:grid-cols-1 md:grid-cols-[1.2fr_1fr_1fr_1fr_1fr]">
+    <div
+      class="grid grid-cols-1 gap-10 max-tablet:gap-8 max-phone:grid-cols-2 max-phone-xs:grid-cols-1 md:grid-cols-[1.2fr_1fr_1fr_1fr_1fr]"
+    >
       <div class="max-phone:col-span-full">
-        <a class="relative z-[3] block w-fit min-h-[44px] flex items-center active:opacity-75" href={logoUrl}>
+        <a
+          class="relative z-[3] block w-fit min-h-[44px] flex items-center active:opacity-75"
+          href={logoUrl}
+        >
           <Logo class="block h-auto w-28" />
           <span class="sr-only">{logoAlt}</span>
         </a>
         <p class="mt-3 max-w-[20em] text-sm text-white/60">
-          Investing and trading is made simple, affordable and accessible for every Indian.
+          Investing and trading is made simple, affordable and accessible for
+          every Indian.
         </p>
         <a
           href="mailto:support@gopocket.in"
@@ -125,7 +133,9 @@ const importantInfo = [
       {
         columns.map((col) => (
           <div>
-            <h3 class="text-sm font-semibold text-white tracking-wide uppercase">{col.title}</h3>
+            <h3 class="text-sm font-semibold text-white tracking-wide uppercase">
+              {col.title}
+            </h3>
             <ul class="m-0 mt-3 flex list-none flex-col gap-2.5 p-0 text-sm text-white/60">
               {col.links.map((l) => (
                 <li>
@@ -140,15 +150,26 @@ const importantInfo = [
       }
     </div>
 
-    <div class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-xs text-white/50 md:flex-row max-phone:text-center">
+    <div
+      class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-xs text-white/50 md:flex-row max-phone:text-center"
+    >
       <p class="m-0">
-        © Made with ❤️ in Coimbatore, India | Copyright © {new Date().getFullYear()} onwards, GoPocket.
+        © Made with ❤️ in Coimbatore, India | Copyright © {
+          new Date().getFullYear()
+        } onwards, GoPocket.
       </p>
-      <ul class="m-0 flex list-none items-center gap-3 p-0 flex-wrap justify-center">
+      <ul
+        class="m-0 flex list-none items-center gap-3 p-0 flex-wrap justify-center"
+      >
         {
           socialLinks.map((s) => (
             <li>
-              <a href={s.url} target="_blank" rel="noopener" class={`${linkClass} px-2 py-1.5 min-h-[44px] inline-flex items-center active:opacity-75`}>
+              <a
+                href={s.url}
+                target="_blank"
+                rel="noopener"
+                class={`${linkClass} px-2 py-1.5 min-h-[44px] inline-flex items-center active:opacity-75`}
+              >
                 {s.title}
               </a>
             </li>
@@ -157,41 +178,53 @@ const importantInfo = [
       </ul>
     </div>
 
-    <div class="mt-8 flex flex-col gap-3 border-t border-white/10 pt-8 text-xs leading-relaxed text-white/40">
+    <div
+      class="mt-8 flex flex-col gap-3 border-t border-white/10 pt-8 text-xs leading-relaxed text-white/40"
+    >
       <p class="m-0">
         GoPocket Invest Tech Private Limited (formerly SKY Commodities India
-        Private Limited) is a member of NSE, BSE and MCX - SEBI Registration
-        No. INZ000049235, NSE Member Code 90221, BSE Clearing Code 6745 | ARN:
+        Private Limited) is a member of NSE, BSE and MCX - SEBI Registration No.
+        INZ000049235, NSE Member Code 90221, BSE Clearing Code 6745 | ARN:
         136818, MCX Membership No. 46365, CDSL Depository service via GoPocket
         Invest Tech Private Limited under SEBI having Registration No.
         INDP5882021. The Registered Office at 40-49, IG Towers, Devangapet 3rd
-        Street, Flower Market, Coimbatore – 641 001, Tamil Nadu, INDIA. For
-        any complaints pertaining to securities broking please write to
+        Street, Flower Market, Coimbatore – 641 001, Tamil Nadu, INDIA. For any
+        complaints pertaining to securities broking please write to
         compliance@gopocket.in, for account opening related queries
-        hello@gopocket.in &amp; for DP related to dp@gopocket.in Please
-        ensure you carefully read the Risk Disclosure Document as prescribed
-        by SEBI | ICF.
+        hello@gopocket.in &amp; for DP related to dp@gopocket.in Please ensure
+        you carefully read the Risk Disclosure Document as prescribed by SEBI |
+        ICF.
       </p>
       <p class="m-0">
         Procedure to file a complaint on{" "}
-        <a href="https://scores.sebi.gov.in/" target="_blank" rel="noopener" class={linkClass}>
+        <a
+          href="https://scores.sebi.gov.in/"
+          target="_blank"
+          rel="noopener"
+          class={linkClass}
+        >
           SEBI SCORES
         </a>{" "}
         |{" "}
-        <a href="https://smartodr.in/login" target="_blank" rel="noopener" class={linkClass}>
+        <a
+          href="https://smartodr.in/login"
+          target="_blank"
+          rel="noopener"
+          class={linkClass}
+        >
           SMART ODR
         </a>{" "}
-        Register on SCORES portal. Mandatory details for filing complaints on
-        SCORES: Name, PAN, Address, Mobile Number, E-mail ID. Benefits:
-        Effective Communication, Speedy redressal of the grievances.
+        Register on SCORES portal. Mandatory details for filing complaints on SCORES:
+        Name, PAN, Address, Mobile Number, E-mail ID. Benefits: Effective Communication,
+        Speedy redressal of the grievances.
       </p>
       <p class="m-0">
         The brand name GoPocket and logo are the registered copyrights of
         GoPocket Invest Tech Private Limited.
       </p>
       <p class="m-0">
-        Investments in securities market are subject to market risks; read
-        all the related documents carefully before investing.
+        Investments in securities market are subject to market risks; read all
+        the related documents carefully before investing.
       </p>
       <p class="m-0">
         Disclaimer: Ensure that no unauthorized transactions occur in your
@@ -200,19 +233,19 @@ const importantInfo = [
         Exchange on your mobile/email at the end of the day.
       </p>
       <p class="m-0">
-        Stock Brokers can accept securities as margin from clients only by
-        way of pledge in the depository system w.e.f. September 1, 2020.
-        Check your securities / MF / bonds in the consolidated account
-        statement issued by NSDL/CDSL every month. KYC is one time exercise
-        while dealing in securities markets - once KYC is done through a SEBI
-        registered intermediary (broker, DP, Mutual Fund etc.), you need not
-        undergo the same process again when you approach another
-        intermediary. Dear Investor, if you are subscribing to an IPO, there
-        is no need to issue a cheque. Please write the Bank account number
-        and sign the IPO application form to authorize your bank to make
-        payment in case of allotment. In case of non allotment the funds will
-        remain in your bank account. As a business we don't give stock tips,
-        and have not authorized anyone to trade on behalf of others.
+        Stock Brokers can accept securities as margin from clients only by way
+        of pledge in the depository system w.e.f. September 1, 2020. Check your
+        securities / MF / bonds in the consolidated account statement issued by
+        NSDL/CDSL every month. KYC is one time exercise while dealing in
+        securities markets - once KYC is done through a SEBI registered
+        intermediary (broker, DP, Mutual Fund etc.), you need not undergo the
+        same process again when you approach another intermediary. Dear
+        Investor, if you are subscribing to an IPO, there is no need to issue a
+        cheque. Please write the Bank account number and sign the IPO
+        application form to authorize your bank to make payment in case of
+        allotment. In case of non allotment the funds will remain in your bank
+        account. As a business we don't give stock tips, and have not authorized
+        anyone to trade on behalf of others.
       </p>
 
       <p class="m-0">
@@ -220,7 +253,12 @@ const importantInfo = [
         {
           importantLinks.map((l, i) => (
             <>
-              <a href={l.url} target="_blank" rel="noopener" class={`${linkClass} inline`}>
+              <a
+                href={l.url}
+                target="_blank"
+                rel="noopener"
+                class={`${linkClass} inline`}
+              >
                 {l.title}
               </a>
               {i < importantLinks.length - 1 ? " | " : ""}
@@ -243,9 +281,4 @@ const importantInfo = [
       </p>
     </div>
   </Container>
-
-  <!-- Please don't remove this -->
-  <div class="pb-4 text-center text-[12px] text-white/40">
-    <a href="https://hashemian.me/">Created by Sijad</a>
-  </div>
 </footer>
