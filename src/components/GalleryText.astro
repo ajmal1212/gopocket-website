@@ -16,27 +16,27 @@ interface Props {
 const { title, text, cta, images, marqueeTexts } = Astro.props;
 ---
 
-<div class="sy-gallery-text relative mt-32 bg-brand-3 text-text pt-24 pb-16 overflow-hidden">
+<div class="sy-gallery-text relative mt-16 sm:mt-24 md:mt-32 bg-brand-3 text-text pt-12 sm:pt-16 md:pt-24 pb-12 sm:pb-16 overflow-hidden">
   <Container
-    class="row relative z-[9] flex flex-row-reverse items-center justify-end gap-12 rounded-3xl p-8 max-tablet:gap-8 max-tablet-sm:flex-col-reverse max-phone:px-4 max-phone:py-4"
+    class="row relative z-[9] flex flex-row-reverse items-center justify-end gap-8 md:gap-12 rounded-3xl p-4 sm:p-6 md:p-8 max-tablet-sm:flex-col-reverse"
   >
-    <div class="flex flex-1 flex-col items-start py-4">
+    <div class="flex flex-1 flex-col items-start py-2 sm:py-4 max-tablet-sm:items-center max-tablet-sm:text-center">
       <h2
-        class="mb-4 max-w-[10em] text-[2rem] leading-none font-semibold text-text"
+        class="mb-3 sm:mb-4 max-w-[12em] text-[1.65rem] sm:text-[1.85rem] md:text-[2rem] leading-snug sm:leading-none font-semibold text-text"
         data-sy-reveal="words"
       >
         {title}
       </h2>
-      <p class="max-w-[25em] text-text-alt" data-sy-reveal="lines">{text}</p>
-      {cta ? <Button {...cta} color="primary" arrow class="mt-6" /> : null}
+      <p class="max-w-[25em] text-text-alt text-sm sm:text-base" data-sy-reveal="lines">{text}</p>
+      {cta ? <Button {...cta} color="primary" arrow class="mt-5 sm:mt-6" /> : null}
     </div>
     <Gallery
-      class="max-w-[32rem] min-h-[22rem] max-desktop-sm:max-w-[27rem] max-tablet:max-w-[25rem] rounded-2xl overflow-hidden shadow-none"
+      class="w-full max-w-full sm:max-w-[27rem] md:max-w-[32rem] rounded-2xl overflow-hidden shadow-none"
       images={images}
     />
   </Container>
   <TextMarquee
-    class="z-[9] mt-16 py-8 [--c:var(--color-brand-1)]"
+    class="z-[9] mt-10 sm:mt-16 py-6 sm:py-8 [--c:var(--color-brand-1)]"
     texts={marqueeTexts}
     direction={-1}
   />

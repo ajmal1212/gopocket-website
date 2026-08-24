@@ -9,26 +9,26 @@ interface Props {
 const { images, class: className } = Astro.props;
 ---
 
-<sy-gallery class:list={["relative flex w-full overflow-hidden", className]}>
-  <div class="outer relative z-[1] flex-1">
+<sy-gallery class:list={["relative flex w-full overflow-hidden aspect-[4/3] sm:aspect-[16/10] md:aspect-[4/3]", className]}>
+  <div class="outer relative z-[1] flex-1 h-full w-full">
     <div class="inner relative h-full w-full">
       {
         images.map((img) => {
           const isVideo = /\.(mp4|webm|mov)$/i.test(img.src);
           return (
-            <div class="img absolute inset-0 h-full w-full overflow-hidden will-change-transform">
+            <div class="img absolute inset-0 h-full w-full overflow-hidden will-change-transform flex items-center justify-center rounded-2xl bg-white/40">
               {isVideo ? (
                 <video
                   src={img.src}
                   aria-label={img.alt}
-                  class="absolute h-full w-full object-cover"
+                  class="h-full w-full object-contain"
                   autoplay
                   loop
                   muted
                   playsinline
                 />
               ) : (
-                <img {...img} class="absolute h-full w-full object-cover" />
+                <img {...img} class="h-full w-full object-contain p-1" />
               )}
             </div>
           );
