@@ -44,7 +44,7 @@
   /* light amber */
   --color-brand-5: #1e9e5b;
   /* success green */
-  --color-bg: #f7f7fb;
+  --color-bg: #ffffff;
 
   /* easings */
   --ease-in-quad: cubic-bezier(0.55, 0.085, 0.68, 0.53);
