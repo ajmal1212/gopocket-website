@@ -22,13 +22,13 @@ const description = "description" in item ? item.description : undefined;
 
 const triggerClass =
   depth === 0
-    ? "flex items-center gap-1.5 whitespace-nowrap transition-colors duration-200 hover:text-brand-1 max-tablet:w-full max-tablet:justify-center max-tablet:py-2.5 max-tablet:min-h-[44px] active:opacity-75"
-    : "flex w-full items-center justify-between gap-2 rounded-md px-3 py-2.5 transition-colors duration-200 hover:bg-brand-3/50 max-tablet:justify-center max-tablet:hover:bg-transparent max-tablet:min-h-[44px]";
+    ? "flex items-center gap-2 whitespace-nowrap transition-colors duration-200 hover:text-brand-1 max-tablet:w-full max-tablet:justify-between max-tablet:px-4 max-tablet:py-3 max-tablet:rounded-xl max-tablet:bg-brand-3/25 max-tablet:text-text max-tablet:font-medium max-tablet:text-base active:scale-[0.99]"
+    : "flex w-full items-center justify-between gap-2 rounded-md px-3 py-2.5 transition-colors duration-200 hover:bg-brand-3/50 max-tablet:justify-between max-tablet:px-3 max-tablet:py-2.5 max-tablet:rounded-lg max-tablet:hover:bg-brand-3/30 max-tablet:min-h-[44px]";
 
 const linkClass =
   depth === 0
-    ? `whitespace-nowrap transition-colors duration-200 hover:text-brand-1 max-tablet:flex max-tablet:items-center max-tablet:justify-center max-tablet:py-2.5 max-tablet:min-h-[44px] max-tablet:w-full active:opacity-75 ${isActive ? "text-brand-1" : ""}`
-    : "flex items-start gap-2.5 rounded-lg p-2.5 transition-colors duration-200 hover:bg-brand-3/40 active:bg-brand-3/60 max-tablet:w-full max-tablet:max-w-[22rem] max-tablet:items-center max-tablet:min-h-[48px]";
+    ? `whitespace-nowrap transition-colors duration-200 hover:text-brand-1 max-tablet:flex max-tablet:items-center max-tablet:justify-start max-tablet:px-4 max-tablet:py-3 max-tablet:min-h-[44px] max-tablet:w-full max-tablet:rounded-xl max-tablet:bg-brand-3/25 max-tablet:text-text max-tablet:font-medium max-tablet:text-base active:scale-[0.99] ${isActive ? "text-brand-1" : ""}`
+    : "flex items-start gap-2.5 rounded-lg p-2.5 transition-colors duration-200 hover:bg-brand-3/40 active:bg-brand-3/60 max-tablet:w-full max-tablet:items-center max-tablet:justify-start max-tablet:min-h-[44px] max-tablet:text-left";
 const columnsCount =
   "columns" in item && item.columns
     ? item.columns
@@ -52,9 +52,9 @@ const spanColClass = columnsCount === 3 ? "col-span-3" : "col-span-2";
         </button>
         <div
           hidden
-          class={`nav-panel absolute top-full left-1/2 z-20 mt-4 ${panelWidthClass} max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-2xl bg-white p-5 shadow-[0_10px_30px_rgba(0,0,0,0.12)] before:absolute before:-top-[13px] before:left-1/2 before:z-10 before:h-0 before:w-0 before:-translate-x-1/2 before:border-x-[14px] before:border-b-[14px] before:border-x-transparent before:border-b-white before:content-[''] max-tablet:static max-tablet:mt-2 max-tablet:w-full max-tablet:max-w-none max-tablet:translate-x-0 max-tablet:rounded-none max-tablet:bg-transparent max-tablet:p-0 max-tablet:shadow-none max-tablet:before:hidden`}
+          class={`nav-panel absolute top-full left-1/2 z-20 mt-4 ${panelWidthClass} max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-2xl bg-white p-5 shadow-[0_10px_30px_rgba(0,0,0,0.12)] before:absolute before:-top-[13px] before:left-1/2 before:z-10 before:h-0 before:w-0 before:-translate-x-1/2 before:border-x-[14px] before:border-b-[14px] before:border-x-transparent before:border-b-white before:content-[''] max-tablet:static max-tablet:mt-2 max-tablet:w-full max-tablet:max-w-none max-tablet:translate-x-0 max-tablet:rounded-xl max-tablet:bg-brand-3/20 max-tablet:p-3 max-tablet:border max-tablet:border-brand-3/50 max-tablet:shadow-none max-tablet:before:hidden`}
         >
-          <ul class={`m-0 grid list-none ${gridColsClass} gap-x-3 gap-y-2 p-0 text-xs max-tablet:flex max-tablet:grid-cols-1 max-tablet:flex-col max-tablet:items-center max-tablet:gap-3`}>
+          <ul class={`m-0 grid list-none ${gridColsClass} gap-x-3 gap-y-2 p-0 text-xs max-tablet:flex max-tablet:flex-col max-tablet:items-stretch max-tablet:gap-2 max-tablet:w-full`}>
             {item.children.map((child) => (
               <li class={"children" in child ? `${spanColClass} max-tablet:col-span-1` : undefined}>
                 <NavMenuItem item={child} depth={1} currentPath={currentPath} />
@@ -64,7 +64,7 @@ const spanColClass = columnsCount === 3 ? "col-span-3" : "col-span-2";
         </div>
       </div>
     ) : (
-      <div class={`${spanColClass} mt-3 pt-3 border-t border-gray-100 max-tablet:w-full`}>
+      <div class={`${spanColClass} mt-3 pt-3 border-t border-gray-100 max-tablet:w-full max-tablet:mt-2 max-tablet:pt-2 max-tablet:border-brand-3/40`}>
         <div class="flex items-center gap-2 mb-2 px-2.5">
           {Icon && (
             <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-brand-3/60 text-brand-1">
@@ -73,7 +73,7 @@ const spanColClass = columnsCount === 3 ? "col-span-3" : "col-span-2";
           )}
           <span class="font-semibold text-xs text-brand-1 uppercase tracking-wider">{item.title}</span>
         </div>
-        <ul class="m-0 grid list-none grid-cols-3 gap-x-2 gap-y-1 p-0 text-xs max-tablet:flex max-tablet:grid-cols-1 max-tablet:flex-col max-tablet:items-center max-tablet:gap-2">
+        <ul class="m-0 grid list-none grid-cols-3 gap-x-2 gap-y-1 p-0 text-xs max-tablet:grid max-tablet:grid-cols-1 max-tablet:gap-1.5 max-tablet:w-full">
           {item.children.map((child) => (
             <li>
               <NavMenuItem item={child} depth={1} currentPath={currentPath} />
@@ -89,10 +89,10 @@ const spanColClass = columnsCount === 3 ? "col-span-3" : "col-span-2";
           <Icon class="h-4 w-4" />
         </span>
       )}
-      <span class={depth === 1 ? "flex flex-col" : undefined}>
+      <span class={depth === 1 ? "flex flex-col text-left" : undefined}>
         <span class={depth === 1 ? "font-medium" : undefined}>{item.title}</span>
         {depth === 1 && description && (
-          <span class="mt-0.5 text-[0.7rem] leading-snug text-text-alt max-tablet:text-center">
+          <span class="mt-0.5 text-[0.7rem] leading-snug text-text-alt max-tablet:text-left">
             {description}
           </span>
         )}

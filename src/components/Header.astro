@@ -35,10 +35,22 @@ const { logoUrl, logoAlt, link1, link2, navLinks, currentPath = "" } =
 
           <nav
             aria-label="Primary"
-            class="max-tablet:fixed max-tablet:inset-0 max-tablet:z-[2] max-tablet:flex max-tablet:h-screen max-tablet:w-screen max-tablet:items-center max-tablet:justify-center max-tablet:overflow-y-auto max-tablet:bg-brand-3/95 max-tablet:backdrop-blur-xl max-tablet:pt-[max(5rem,env(safe-area-inset-top))] max-tablet:pb-[max(3rem,env(safe-area-inset-bottom))] max-tablet:px-6 max-tablet:[clip-path:inset(0_0_0%)] max-tablet:transition-[clip-path] max-tablet:duration-500 max-tablet:ease-out-expo [body:not(.is-nav-opened)_&]:max-tablet:pointer-events-none [body:not(.is-nav-opened)_&]:max-tablet:[clip-path:inset(0_0_100%)] [body.is-nav-small:not(.is-nav-opened)_&]:max-tablet:[clip-path:inset(0_0_calc(100%-3.75rem)_round_0_0_1.5rem_1.5rem)] [body.is-nav-small:not(.is-nav-opened)_&]:max-tablet-sm:[clip-path:inset(0_0_calc(100%-3.75rem)_round_0_0_1rem_1rem)] [body.is-nav-small:not(.is-nav-opened)_&]:max-phone:[clip-path:inset(0_0_calc(100%-3.375rem)_round_0_0_1rem_1rem)]"
+            class="max-tablet:fixed max-tablet:inset-0 max-tablet:z-[2] max-tablet:flex max-tablet:flex-col max-tablet:h-screen max-tablet:w-screen max-tablet:items-start max-tablet:justify-start max-tablet:overflow-y-auto max-tablet:bg-white/98 max-tablet:backdrop-blur-2xl max-tablet:pt-[max(5rem,env(safe-area-inset-top))] max-tablet:pb-[max(3rem,env(safe-area-inset-bottom))] max-tablet:px-5 max-tablet:transition-[opacity,visibility,transform] max-tablet:duration-300 max-tablet:ease-out-expo [body:not(.is-nav-opened)_&]:max-tablet:pointer-events-none [body:not(.is-nav-opened)_&]:max-tablet:opacity-0 [body:not(.is-nav-opened)_&]:max-tablet:-translate-y-2 [body.is-nav-opened_&]:max-tablet:opacity-100 [body.is-nav-opened_&]:max-tablet:translate-y-0"
           >
+            <!-- Search bar inside mobile menu -->
+            <div class="w-full mb-3 sm:hidden pt-2">
+              <div class="relative flex items-center w-full">
+                <Search class="absolute left-3.5 h-4 w-4 text-gray-400 pointer-events-none" />
+                <input
+                  type="text"
+                  placeholder="Search GoPocket...."
+                  class="header-search-input w-full rounded-xl border border-gray-200/80 bg-gray-50 py-2.5 pl-10 pr-4 text-sm text-text placeholder:text-gray-400 focus:border-brand-1 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-1/20 transition-all shadow-xs"
+                />
+              </div>
+            </div>
+
             <ul
-              class="nav-list m-0 flex list-none items-center gap-[1.125em] p-0 text-sm max-tablet:w-full max-tablet:flex-col max-tablet:gap-4 max-tablet:text-[1.25rem] max-tablet:text-brand-1"
+              class="nav-list m-0 flex list-none items-center gap-[1.125em] p-0 text-sm max-tablet:w-full max-tablet:flex-col max-tablet:gap-2.5 max-tablet:items-start"
             >
               {
                 navLinks.map((item) => (
@@ -48,6 +60,14 @@ const { logoUrl, logoAlt, link1, link2, navLinks, currentPath = "" } =
                 ))
               }
             </ul>
+
+            {
+              link2 ? (
+                <div class="mt-5 w-full max-tablet:block hidden">
+                  <Button {...link2} fullWidth revealable={false} size="lg" />
+                </div>
+              ) : null
+            }
           </nav>
         </div>
 
