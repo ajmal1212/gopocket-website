@@ -622,16 +622,17 @@ void main() {
         ballGroup.scale.setScalar(d.scale);
       };
 
+      setFirst();
+
       const tl = gsap.timeline({
         defaults: { ease: "none" },
         scrollTrigger: {
           trigger: document.body,
-          scrub: true,
+          scrub: isMobile ? 0.4 : true,
           invalidateOnRefresh: true,
           fastScrollEnd: true,
           onRefresh: () => {
             positions = new WeakMap();
-            setFirst();
           },
           start: () => `${Math.round(window.innerHeight / 2)}px center`,
           end: () => {
@@ -641,8 +642,6 @@ void main() {
           },
         },
       });
-
-      tl.add(() => setFirst());
 
       placeholders.forEach((hldr, i) => {
         const prev = placeholders[i - 1];
@@ -682,13 +681,21 @@ void main() {
 
       this.tl = tl;
 
-      const ro = new ResizeObserver(() => tl.scrollTrigger?.refresh());
+      const ro = new ResizeObserver(() => {
+        if (window.innerWidth !== this.width) {
+          tl.scrollTrigger?.refresh();
+        }
+      });
       ro.observe(document.body);
     }
 
     onResize = () => {
-      this.width = window.innerWidth;
-      this.height = window.innerHeight;
+      const newWidth = window.innerWidth;
+      const newHeight = window.innerHeight;
+      const isWidthChanged = newWidth !== this.width;
+
+      this.width = newWidth;
+      this.height = newHeight;
 
       pixelToUnit = -FRUSTUM_SIZE / this.height;
 
@@ -706,9 +713,11 @@ void main() {
       camera.bottom = -FRUSTUM_SIZE / 2;
       camera.updateProjectionMatrix();
 
-      requestAnimationFrame(() => {
-        this.tl?.scrollTrigger?.refresh();
-      });
+      if (isWidthChanged) {
+        requestAnimationFrame(() => {
+          this.tl?.scrollTrigger?.refresh();
+        });
+      }
     };
   }
 
