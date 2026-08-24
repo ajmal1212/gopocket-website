@@ -14,6 +14,7 @@ export interface NavLink {
 export interface NavDropdown {
   title: string;
   icon?: any;
+  columns?: 2 | 3;
   children: NavEntry[];
 }
 

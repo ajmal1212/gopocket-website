@@ -2,7 +2,6 @@
 import type { Link, Image } from "../types";
 import Button from "./Button.astro";
 import Gallery from "./Gallery.astro";
-import GradientBackground from "./GradientBackground.astro";
 import TextMarquee from "../components/TextMarquee.astro";
 import Container from "./Container.astro";
 
@@ -17,31 +16,30 @@ interface Props {
 const { title, text, cta, images, marqueeTexts } = Astro.props;
 ---
 
-<div class="sy-gallery-text relative mt-32 pt-40">
+<div class="sy-gallery-text relative mt-32 bg-brand-3 text-text pt-24 pb-16 overflow-hidden">
   <Container
-    class="row relative z-[9] flex flex-row-reverse items-center justify-end gap-12 rounded-3xl p-8 [backdrop-filter:blur(6px)_saturate(1.05)] max-tablet:gap-8 max-tablet-sm:flex-col-reverse max-phone:px-0 max-phone:py-4"
+    class="row relative z-[9] flex flex-row-reverse items-center justify-end gap-12 rounded-3xl p-8 max-tablet:gap-8 max-tablet-sm:flex-col-reverse max-phone:px-4 max-phone:py-4"
   >
     <div class="flex flex-1 flex-col items-start py-4">
       <h2
-        class="mb-4 max-w-[10em] text-[2rem] leading-none font-semibold"
+        class="mb-4 max-w-[10em] text-[2rem] leading-none font-semibold text-text"
         data-sy-reveal="words"
       >
         {title}
       </h2>
-      <p class="max-w-[25em]" data-sy-reveal="lines">{text}</p>
-      {cta ? <Button {...cta} arrow class="mt-6" /> : null}
+      <p class="max-w-[25em] text-text-alt" data-sy-reveal="lines">{text}</p>
+      {cta ? <Button {...cta} color="primary" arrow class="mt-6" /> : null}
     </div>
     <Gallery
-      class="max-w-[32rem] min-h-[22rem] max-desktop-sm:max-w-[27rem] max-tablet:max-w-[25rem]"
+      class="max-w-[32rem] min-h-[22rem] max-desktop-sm:max-w-[27rem] max-tablet:max-w-[25rem] rounded-2xl overflow-hidden shadow-none"
       images={images}
     />
   </Container>
   <TextMarquee
-    class="z-[9] mt-24 py-8 [--c:var(--color-white)]"
+    class="z-[9] mt-16 py-8 [--c:var(--color-brand-1)]"
     texts={marqueeTexts}
     direction={-1}
   />
-  <GradientBackground />
 </div>
 
 <script>

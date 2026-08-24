@@ -13,9 +13,10 @@ const defaultColors = [
 const { colors = defaultColors } = Astro.props;
 ---
 
+<!-- Background gradient disabled. Remove 'hidden' class to re-enable -->
 <sy-gradient-bg
   data-colors={JSON.stringify(colors)}
-  class="absolute top-0 left-0 h-full w-full"
+  class="absolute top-0 left-0 h-full w-full hidden"
 ></sy-gradient-bg>
 
 <script>

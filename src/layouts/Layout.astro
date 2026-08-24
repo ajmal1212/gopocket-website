@@ -67,9 +67,9 @@ const pageSchema = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
 // live login/account-management subdomains.
 const navLinks: NavEntry[] = [
   { title: "Products", url: "/products" },
-  { title: "Investments", url: "/investments" },
   {
     title: "Research",
+    columns: 2,
     children: [
       {
         title: "Equity",
@@ -96,66 +96,8 @@ const navLinks: NavEntry[] = [
   { title: "Refer & Earn", url: "#" },
   { title: "Partner with Us", url: "#" },
   {
-    title: "Rekyc",
-    children: [
-      {
-        title: "Mobile Modification",
-        url: "#",
-        icon: Smartphone,
-        description: "Update the mobile number linked to your account.",
-      },
-      {
-        title: "Email Modification",
-        url: "#",
-        icon: Mail,
-        description: "Update the email address linked to your account.",
-      },
-      {
-        title: "Bank Addition",
-        url: "#",
-        icon: Banknote,
-        description: "Add or change your linked bank account.",
-      },
-      {
-        title: "Segment Activation",
-        url: "#",
-        icon: ToggleRight,
-        description: "Enable new trading segments like F&O or currency.",
-      },
-      {
-        title: "Address Updation",
-        url: "#",
-        icon: MapPin,
-        description: "Update your registered communication address.",
-      },
-      {
-        title: "Financial Updation",
-        url: "#",
-        icon: BadgeIndianRupee,
-        description: "Update your income and financial details on file.",
-      },
-      {
-        title: "DDPI (POA)",
-        url: "#",
-        icon: Signature,
-        description: "Set up Demat Debit and Pledge Instruction online.",
-      },
-      {
-        title: "Reactivation",
-        url: "#",
-        icon: RotateCcw,
-        description: "Reactivate a dormant or deactivated account.",
-      },
-      {
-        title: "Account Closure",
-        url: "#",
-        icon: UserX,
-        description: "Start the process to close your GoPocket account.",
-      },
-    ],
-  },
-  {
     title: "Sign In",
+    columns: 3,
     children: [
       {
         title: "Web Trade",
@@ -204,6 +146,66 @@ const navLinks: NavEntry[] = [
         url: "#",
         icon: Wallet,
         description: "Add funds to your trading account securely.",
+      },
+      {
+        title: "ReKYC",
+        icon: RotateCcw,
+        children: [
+          {
+            title: "Mobile Modification",
+            url: "#",
+            icon: Smartphone,
+            description: "Update the mobile number linked to your account.",
+          },
+          {
+            title: "Email Modification",
+            url: "#",
+            icon: Mail,
+            description: "Update the email address linked to your account.",
+          },
+          {
+            title: "Bank Addition",
+            url: "#",
+            icon: Banknote,
+            description: "Add or change your linked bank account.",
+          },
+          {
+            title: "Segment Activation",
+            url: "#",
+            icon: ToggleRight,
+            description: "Enable new trading segments like F&O or currency.",
+          },
+          {
+            title: "Address Updation",
+            url: "#",
+            icon: MapPin,
+            description: "Update your registered communication address.",
+          },
+          {
+            title: "Financial Updation",
+            url: "#",
+            icon: BadgeIndianRupee,
+            description: "Update your income and financial details on file.",
+          },
+          {
+            title: "DDPI (POA)",
+            url: "#",
+            icon: Signature,
+            description: "Set up Demat Debit and Pledge Instruction online.",
+          },
+          {
+            title: "Reactivation",
+            url: "#",
+            icon: RotateCcw,
+            description: "Reactivate a dormant or deactivated account.",
+          },
+          {
+            title: "Account Closure",
+            url: "#",
+            icon: UserX,
+            description: "Start the process to close your GoPocket account.",
+          },
+        ],
       },
     ],
   },

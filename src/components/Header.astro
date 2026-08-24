@@ -3,6 +3,7 @@ import Button from "./Button.astro";
 import Logo from "../assets/logo.svg";
 import NavMenuItem from "./NavMenuItem.astro";
 import type { Link, NavEntry } from "../types";
+import { Search } from "@lucide/astro";
 
 interface Props {
   logoUrl: string;
@@ -22,32 +23,48 @@ const { logoUrl, logoAlt, link1, link2, navLinks, currentPath = "" } =
     class="fixed inset-x-0 top-0 z-10 mx-auto text-text transition-transform duration-300 ease-out-cubic [body.is-nav-hidden_&]:-translate-y-full before:absolute before:inset-0 before:-z-[1] before:content-[''] after:absolute after:inset-0 after:-z-[1] after:origin-top after:scale-y-0 after:bg-brand-3/70 after:backdrop-blur-[15px] after:transition-transform after:duration-300 after:ease-out-cubic after:content-[''] [body.is-nav-small_&]:after:scale-y-100"
   >
     <div
-      class="mx-auto w-[calc(100%-3rem)] max-w-[72rem] py-4 transition-[padding] duration-300 ease-out-cubic max-desktop-sm:w-[calc(100%-3rem)] max-tablet:w-[calc(100%-2rem)] max-phone:w-[calc(100%-1.5rem)] [body.is-nav-small_&]:py-2"
+      class="mx-auto w-[calc(100%-3rem)] max-w-[1300px] py-4 transition-[padding] duration-300 ease-out-cubic max-desktop-sm:w-[calc(100%-3rem)] max-tablet:w-[calc(100%-2rem)] max-phone:w-[calc(100%-1.5rem)] [body.is-nav-small_&]:py-2"
     >
-      <div class="relative flex items-center justify-between max-tablet:flex-wrap">
-        <a class="relative z-[3] flex items-center min-h-[44px] active:scale-95 transition-transform" href={logoUrl}>
-          <Logo class="block h-auto w-30 max-phone:w-25" />
-          <span class="sr-only">{logoAlt}</span>
-        </a>
+      <div class="relative flex items-center justify-between gap-4">
+        <!-- Left Side: Logo + Nav Links -->
+        <div class="flex items-center gap-6 lg:gap-8">
+          <a class="relative z-[3] flex items-center shrink-0 min-h-[44px] active:scale-95 transition-transform" href={logoUrl}>
+            <Logo class="block h-auto w-30 max-phone:w-25" />
+            <span class="sr-only">{logoAlt}</span>
+          </a>
 
-        <nav
-          aria-label="Primary"
-          class="absolute inset-x-0 mx-auto w-min max-tablet:fixed max-tablet:inset-0 max-tablet:z-[2] max-tablet:flex max-tablet:h-screen max-tablet:w-screen max-tablet:items-center max-tablet:justify-center max-tablet:overflow-y-auto max-tablet:bg-brand-3/95 max-tablet:backdrop-blur-xl max-tablet:pt-[max(5rem,env(safe-area-inset-top))] max-tablet:pb-[max(3rem,env(safe-area-inset-bottom))] max-tablet:px-6 max-tablet:[clip-path:inset(0_0_0%)] max-tablet:transition-[clip-path] max-tablet:duration-500 max-tablet:ease-out-expo [body:not(.is-nav-opened)_&]:max-tablet:pointer-events-none [body:not(.is-nav-opened)_&]:max-tablet:[clip-path:inset(0_0_100%)] [body.is-nav-small:not(.is-nav-opened)_&]:max-tablet:[clip-path:inset(0_0_calc(100%-3.75rem)_round_0_0_1.5rem_1.5rem)] [body.is-nav-small:not(.is-nav-opened)_&]:max-tablet-sm:[clip-path:inset(0_0_calc(100%-3.75rem)_round_0_0_1rem_1rem)] [body.is-nav-small:not(.is-nav-opened)_&]:max-phone:[clip-path:inset(0_0_calc(100%-3.375rem)_round_0_0_1rem_1rem)]"
-        >
-          <ul
-            class="nav-list m-0 flex list-none items-center gap-[1.3125em] p-0 text-sm max-tablet:w-full max-tablet:flex-col max-tablet:gap-4 max-tablet:text-[1.25rem] max-tablet:text-brand-1"
+          <nav
+            aria-label="Primary"
+            class="max-tablet:fixed max-tablet:inset-0 max-tablet:z-[2] max-tablet:flex max-tablet:h-screen max-tablet:w-screen max-tablet:items-center max-tablet:justify-center max-tablet:overflow-y-auto max-tablet:bg-brand-3/95 max-tablet:backdrop-blur-xl max-tablet:pt-[max(5rem,env(safe-area-inset-top))] max-tablet:pb-[max(3rem,env(safe-area-inset-bottom))] max-tablet:px-6 max-tablet:[clip-path:inset(0_0_0%)] max-tablet:transition-[clip-path] max-tablet:duration-500 max-tablet:ease-out-expo [body:not(.is-nav-opened)_&]:max-tablet:pointer-events-none [body:not(.is-nav-opened)_&]:max-tablet:[clip-path:inset(0_0_100%)] [body.is-nav-small:not(.is-nav-opened)_&]:max-tablet:[clip-path:inset(0_0_calc(100%-3.75rem)_round_0_0_1.5rem_1.5rem)] [body.is-nav-small:not(.is-nav-opened)_&]:max-tablet-sm:[clip-path:inset(0_0_calc(100%-3.75rem)_round_0_0_1rem_1rem)] [body.is-nav-small:not(.is-nav-opened)_&]:max-phone:[clip-path:inset(0_0_calc(100%-3.375rem)_round_0_0_1rem_1rem)]"
           >
-            {
-              navLinks.map((item) => (
-                <li class="max-tablet:w-full">
-                  <NavMenuItem item={item} currentPath={currentPath} />
-                </li>
-              ))
-            }
-          </ul>
-        </nav>
+            <ul
+              class="nav-list m-0 flex list-none items-center gap-[1.125em] p-0 text-sm max-tablet:w-full max-tablet:flex-col max-tablet:gap-4 max-tablet:text-[1.25rem] max-tablet:text-brand-1"
+            >
+              {
+                navLinks.map((item) => (
+                  <li class="max-tablet:w-full">
+                    <NavMenuItem item={item} currentPath={currentPath} />
+                  </li>
+                ))
+              }
+            </ul>
+          </nav>
+        </div>
 
-        <div class="z-[2] flex items-center gap-[0.8rem] max-tablet:gap-3">
+        <!-- Right Side: Search Input + Open Account Button -->
+        <div class="z-[2] flex items-center gap-3 shrink-0">
+          <div class="relative hidden sm:flex items-center">
+            <div class="relative flex items-center w-48 md:w-56 lg:w-64">
+              <Search class="absolute left-3 h-4 w-4 text-gray-400 pointer-events-none" />
+              <input
+                type="text"
+                placeholder="Search GoPocket...."
+                class="header-search-input w-full rounded-xl border border-gray-200/80 bg-white/90 py-2 pl-9 pr-14 text-xs text-text placeholder:text-gray-400 focus:border-brand-1 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-1/20 transition-all shadow-xs"
+              />
+              <kbd class="absolute right-2.5 rounded border border-gray-200 bg-gray-50 px-1.5 py-0.5 text-[10px] font-medium text-gray-400 font-mono pointer-events-none">Ctrl+K</kbd>
+            </div>
+          </div>
+
           {
             link1 ? (
               <a
@@ -104,6 +121,16 @@ const { logoUrl, logoAlt, link1, link2, navLinks, currentPath = "" } =
           document.body.classList.remove("is-nav-opened");
         });
       });
+
+      const searchInput = this.querySelector<HTMLInputElement>(".header-search-input");
+      if (searchInput) {
+        document.addEventListener("keydown", (e) => {
+          if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+            e.preventDefault();
+            searchInput.focus();
+          }
+        });
+      }
 
       this.onResize();
       this.onScroll(window.scrollY);

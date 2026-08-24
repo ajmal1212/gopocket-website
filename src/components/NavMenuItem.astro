@@ -29,31 +29,51 @@ const linkClass =
   depth === 0
     ? `whitespace-nowrap transition-colors duration-200 hover:text-brand-1 max-tablet:flex max-tablet:items-center max-tablet:justify-center max-tablet:py-2.5 max-tablet:min-h-[44px] max-tablet:w-full active:opacity-75 ${isActive ? "text-brand-1" : ""}`
     : "flex items-start gap-2.5 rounded-lg p-2.5 transition-colors duration-200 hover:bg-brand-3/40 active:bg-brand-3/60 max-tablet:w-full max-tablet:max-w-[22rem] max-tablet:items-center max-tablet:min-h-[48px]";
+const columnsCount =
+  "columns" in item && item.columns
+    ? item.columns
+    : isDropdown && item.children.length > 4
+    ? 3
+    : 2;
+
+const panelWidthClass = columnsCount === 3 ? "w-[54rem]" : "w-[36rem]";
+const gridColsClass = columnsCount === 3 ? "grid-cols-3" : "grid-cols-2";
+const spanColClass = columnsCount === 3 ? "col-span-3" : "col-span-2";
 ---
 
 {
   isDropdown ? (
-    <div class="nav-item group/nav relative max-tablet:w-full">
-      <button type="button" class={`nav-toggle ${triggerClass}`} aria-expanded="false">
-        {Icon && <Icon class="h-4 w-4 shrink-0 text-brand-1" />}
-        <span>{item.title}</span>
-        <ChevronDown class="h-3.5 w-3.5 shrink-0 transition-transform duration-200 [.is-open_&]:rotate-180" />
-      </button>
-      <div
-        hidden
-        class={
-          depth === 0
-            ? "nav-panel absolute top-full left-1/2 z-20 mt-4 w-[38rem] max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-2xl bg-white p-4 shadow-[0_10px_30px_rgba(0,0,0,0.12)] before:absolute before:-top-[13px] before:left-1/2 before:z-10 before:h-0 before:w-0 before:-translate-x-1/2 before:border-x-[14px] before:border-b-[14px] before:border-x-transparent before:border-b-white before:content-[''] max-tablet:static max-tablet:mt-2 max-tablet:w-full max-tablet:max-w-none max-tablet:translate-x-0 max-tablet:rounded-none max-tablet:bg-transparent max-tablet:p-0 max-tablet:shadow-none max-tablet:before:hidden"
-            : "nav-panel static mt-1 ml-2 rounded-lg bg-brand-3/40 p-2"
-        }
-      >
-        <ul
-          class={
-            depth === 0
-              ? "m-0 grid list-none grid-cols-2 gap-x-2 gap-y-1 p-0 text-xs max-tablet:flex max-tablet:grid-cols-1 max-tablet:flex-col max-tablet:items-center max-tablet:gap-3"
-              : "m-0 flex list-none flex-col gap-1 p-0 text-sm max-tablet:items-center max-tablet:text-[1.35rem]"
-          }
+    depth === 0 ? (
+      <div class="nav-item group/nav relative max-tablet:w-full">
+        <button type="button" class={`nav-toggle ${triggerClass}`} aria-expanded="false">
+          {Icon && <Icon class="h-4 w-4 shrink-0 text-brand-1" />}
+          <span>{item.title}</span>
+          <ChevronDown class="h-3.5 w-3.5 shrink-0 transition-transform duration-200 [.is-open_&]:rotate-180" />
+        </button>
+        <div
+          hidden
+          class={`nav-panel absolute top-full left-1/2 z-20 mt-4 ${panelWidthClass} max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-2xl bg-white p-5 shadow-[0_10px_30px_rgba(0,0,0,0.12)] before:absolute before:-top-[13px] before:left-1/2 before:z-10 before:h-0 before:w-0 before:-translate-x-1/2 before:border-x-[14px] before:border-b-[14px] before:border-x-transparent before:border-b-white before:content-[''] max-tablet:static max-tablet:mt-2 max-tablet:w-full max-tablet:max-w-none max-tablet:translate-x-0 max-tablet:rounded-none max-tablet:bg-transparent max-tablet:p-0 max-tablet:shadow-none max-tablet:before:hidden`}
         >
+          <ul class={`m-0 grid list-none ${gridColsClass} gap-x-3 gap-y-2 p-0 text-xs max-tablet:flex max-tablet:grid-cols-1 max-tablet:flex-col max-tablet:items-center max-tablet:gap-3`}>
+            {item.children.map((child) => (
+              <li class={"children" in child ? `${spanColClass} max-tablet:col-span-1` : undefined}>
+                <NavMenuItem item={child} depth={1} currentPath={currentPath} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    ) : (
+      <div class={`${spanColClass} mt-3 pt-3 border-t border-gray-100 max-tablet:w-full`}>
+        <div class="flex items-center gap-2 mb-2 px-2.5">
+          {Icon && (
+            <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-brand-3/60 text-brand-1">
+              <Icon class="h-3.5 w-3.5" />
+            </span>
+          )}
+          <span class="font-semibold text-xs text-brand-1 uppercase tracking-wider">{item.title}</span>
+        </div>
+        <ul class="m-0 grid list-none grid-cols-3 gap-x-2 gap-y-1 p-0 text-xs max-tablet:flex max-tablet:grid-cols-1 max-tablet:flex-col max-tablet:items-center max-tablet:gap-2">
           {item.children.map((child) => (
             <li>
               <NavMenuItem item={child} depth={1} currentPath={currentPath} />
@@ -61,7 +81,7 @@ const linkClass =
           ))}
         </ul>
       </div>
-    </div>
+    )
   ) : (
     <a href={item.url} class={linkClass} aria-current={isActive ? "page" : undefined}>
       {depth === 1 && Icon && (
