@@ -20,9 +20,11 @@ const { title, text, cta } = Astro.props;
       <h2 class="max-w-[20em] leading-[1.1]" data-sy-reveal="words">
         {title}
       </h2>
-      <p class="mt-4 max-w-[25em] text-lg max-tablet:mt-4 max-tablet:text-base max-tablet:max-w-[22em] text-text-alt text-center" data-sy-reveal="lines">
-        {text}
-      </p>
+      <p
+        class="mt-4 max-w-[34em] text-lg max-tablet:mt-4 max-tablet:text-base max-tablet:max-w-[26em] text-text-alt text-center"
+        data-sy-reveal="lines"
+        set:html={text}
+      />
       {cta ? <Button {...cta} arrow class="cta" /> : null}
       <div
         data-gl-place
