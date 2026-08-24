@@ -54,24 +54,14 @@ const isAlt = color === "primary-alt";
 const bgClass = isAlt ? "bg-brand-3" : "bg-brand-1";
 const textClass = isAlt ? "text-text" : "text-white";
 const ringClass = isAlt ? "after:border-brand-3" : "after:border-brand-1";
-const arrowBgClass = isAlt ? "after:bg-brand-3" : "after:bg-brand-1";
+const arrowBgClass = isAlt ? "bg-brand-3" : "bg-brand-1";
 
 const sizeClasses =
   size === "sm"
     ? "min-h-[38px] text-[0.75rem] px-4 py-2"
     : size === "lg"
     ? "min-h-[50px] text-sm px-6 py-4"
-    : "min-h-[44px] text-xs px-[1.5em] py-[0.9375em]";
-
-const frontClip = arrow
-  ? "[clip-path:inset(0.95em_1em_0.95em_calc(100%-3em)_round_99px)]"
-  : "[clip-path:inset(50%_round_99px)]";
-const frontHoverClip = arrow
-  ? "group-hover:[clip-path:inset(-25%_-5%_-25%_0%_round_99px)] group-focus:[clip-path:inset(-25%_-5%_-25%_0%_round_99px)]"
-  : "group-hover:[clip-path:inset(-100%_0_round_99px)] group-focus:[clip-path:inset(-100%_0_round_99px)]";
-
-const arrowClasses =
-  "pr-[1em] after:ml-[1em] after:block after:h-[2em] after:w-[2em] after:content-[''] after:[mask:var(--icon-arrow)_no-repeat_center/1em_1em]";
+    : "min-h-[44px] text-xs px-[1.5em] py-[0.8em]";
 ---
 
 <Element
@@ -88,32 +78,24 @@ const arrowClasses =
 >
   <span
     class:list={[
-      "relative flex w-full h-full items-center justify-center after:pointer-events-none after:absolute after:inset-0 after:z-[2] after:rounded-[99px] after:border-2 after:content-['']",
-      ringClass,
+      "relative flex w-full h-full items-center justify-center gap-2.5 rounded-[99px] transition-colors duration-300",
+      bgClass,
+      textClass,
+      sizeClasses,
     ]}
   >
-    <span
-      class:list={[
-        "absolute inset-0 z-[2] flex w-full h-full items-center justify-center bg-white leading-[1.25] text-brand-1 transition-[clip-path] duration-[0.25s] ease-out-cubic",
-        sizeClasses,
-        frontClip,
-        frontHoverClip,
-        arrow && [arrowClasses, "after:bg-brand-1"],
-      ]}
-    >
-      {title}
-    </span>
-    <span
-      aria-hidden
-      class:list={[
-        "flex w-full h-full items-center justify-center leading-[1.25]",
-        sizeClasses,
-        bgClass,
-        textClass,
-        arrow && [arrowClasses, arrowBgClass],
-      ]}
-    >
-      {title}
-    </span>
+    <span>{title}</span>
+    {arrow && (
+      <span
+        class="flex h-[1.75em] w-[1.75em] shrink-0 items-center justify-center rounded-full bg-white transition-transform duration-200 group-hover:translate-x-1 group-focus:translate-x-1"
+      >
+        <span
+          class:list={[
+            "block h-[1em] w-[1em] [mask:var(--icon-arrow)_no-repeat_center/contain]",
+            arrowBgClass,
+          ]}
+        />
+      </span>
+    )}
   </span>
 </Element>
