@@ -73,24 +73,22 @@
   --text-base: 1rem;
   --text-lg: 1.1rem;
 
-  /* heading scale (h1–h5) — sizes are in rem, so they ride the same
-     root font-size breakpoints as the rest of the site (see the html
-     rule below): 20px desktop / 18px desktop-sm / 16px tablet down. */
-  --text-h5: 1rem;
+  /* heading scale (h1–h5) — bold 700 font weight with slightly reduced sizes */
+  --text-h5: 0.95rem;
   --text-h5--line-height: 1.4;
-  --text-h5--font-weight: 500;
-  --text-h4: 1.2rem;
+  --text-h5--font-weight: 700;
+  --text-h4: 1.15rem;
   --text-h4--line-height: 1.3;
-  --text-h4--font-weight: 500;
-  --text-h3: 1.5rem;
+  --text-h4--font-weight: 700;
+  --text-h3: 1.4rem;
   --text-h3--line-height: 1.2;
-  --text-h3--font-weight: 500;
-  --text-h2: 3rem;
+  --text-h3--font-weight: 700;
+  --text-h2: 2.75rem;
   --text-h2--line-height: 1.1;
-  --text-h2--font-weight: 500;
-  --text-h1: 3.4rem;
+  --text-h2--font-weight: 700;
+  --text-h1: 3.15rem;
   --text-h1--line-height: 1.05;
-  --text-h1--font-weight: 500;
+  --text-h1--font-weight: 700;
 
   /* keyframe-driven utilities */
   --animate-plan-border: plan-border 5s linear infinite;
@@ -206,6 +204,7 @@
   h5,
   h6 {
     margin: 0;
+    font-weight: 700;
     overflow-wrap: break-word;
   }
 
