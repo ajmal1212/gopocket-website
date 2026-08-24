@@ -180,7 +180,12 @@
 
   body.is-nav-opened {
     overflow: hidden !important;
-    touch-action: none !important;
+  }
+
+  body.is-nav-opened nav {
+    touch-action: pan-y !important;
+    overscroll-behavior: contain !important;
+    -webkit-overflow-scrolling: touch !important;
   }
 
   h1,
